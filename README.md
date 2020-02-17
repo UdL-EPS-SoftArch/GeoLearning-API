@@ -15,17 +15,18 @@
 
 ## Features per Stakeholder
 
-|       User                      |
-| --------------------------------|
-|    Register                     |                                 
-|    Edit Profile                 |                                 
-|    See Profile                  |                                 
-|    Select Game                  |                                 
-|    Play Games                   |                                 
-|    Create New Games             |                                 
-|    Report Games                 |                                 
-|    Report Users                 |
-|    Qualify Games                |
+|       Content Creator           |       Player                    |  
+| --------------------------------| --------------------------------|
+|    Register                     |    Register                     |                                 
+|    Edit Profile                 |    Edit Profile                 |                                 
+|    See Profile                  |    See Profile                  |                                 
+|    Create New Games             |    Select Game                  |                                 
+|    Edit Existing Games          |    Play Games                   |                                 
+|                                 |    Report Games                 |                                 
+|                                 |    Report Users                 |                                 
+|                                 |    Qualify Games                |
+
+
 
 
 ## Entities Model
