@@ -4,13 +4,13 @@
 
 ## Vision
 
-**For** ... **who** ...
+**For** geography concerners **who** want to learn about the topic through a game
 
-**the project** GeoLearning **is a** ...
+**the project** GeoLearning **is a** webapp created with Spring and Angular,
 
-**that** ... 
+**that** allows them to play and create some games related with geography
 
-**Unlike** ...
+**Unlike** existing tools, GeoLearning uses a repeating memorization technique to ensure that the user consolidates the contents.
 
 
 ## Features per Stakeholder
