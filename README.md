@@ -15,15 +15,18 @@
 
 ## Features per Stakeholder
 
-|       StakeHolder1               |          Stakeholder2            |
-| --------------------------------| --------------------------------|
-|                                 |                                 |
-|                                 |                                 |
-|                                 |                                 |
-|                                 |                                 |
-|                                 |                                 |
-|                                 |                                 |
-|                                 |                                 |
+|       StakeHolder1              |
+| --------------------------------|
+|  - Register                     |                                 
+|  - Edit Profile                 |                                 
+|  - See Profile                  |                                 
+|  - Select Game                  |                                 
+|  - Play Games                   |                                 
+|  - Create New Games             |                                 
+|  - Report Games                 |                                 
+|  - Report Users                 |
+|  - Qualify Games                |
+
 
 ## Entities Model
 
