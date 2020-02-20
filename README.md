@@ -28,5 +28,3 @@
 
 
 ## Entities Model
-
-...
