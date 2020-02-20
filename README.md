@@ -20,11 +20,9 @@
 |    Register                     |    Register                     |                                 
 |    Edit Profile                 |    Edit Profile                 |                                 
 |    See Profile                  |    See Profile                  |                                 
-|    Create New Games             |    Select Game                  |                                 
-|    Edit Existing Games          |    Play Games                   |                                 
-|                                 |    Report Games                 |                                 
-|                                 |    Report Users                 |                                 
-|                                 |    Qualify Games                |
+|    Create New Matches           |    Select Matches               |                                 
+|    Edit Existing Matches        |    Play Matches                 |                                                                                                
+|                                 |    Qualify Matches              |
 
 
 
