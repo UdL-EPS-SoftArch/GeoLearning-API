@@ -1,0 +1,57 @@
+@startuml
+skinparam dpi 200
+skinparam classAttributeFontSize 8
+skinparam classArrowFontSize 9
+skinparam classFontSize 10
+skinparam nodesep 50
+skinparam ranksep 30
+hide stereotype
+skinparam class {
+    BackgroundColor White
+    BackgroundColor<<User>> LightBlue
+    BackgroundColor<<Game>> LightGreen
+    BackgroundColor<<Match>> LightPink
+    BackgroundColor<<MatchResult>> LightPink
+}
+
+
+abstract class User <<User>> {
+    String username, password, email
+}
+
+class ContentCreator <<User>> extends User {}
+
+class Player <<User>> extends User {}
+
+abstract class Game <<Game>> {
+    int id_game
+    String instructions
+}
+
+class ImageName <<Game>> extends Game {}
+
+class Write <<Game>> extends Game {}
+
+class ImageImage <<Game>> extends Game {}
+
+class Options <<Game>> extends Game {}
+
+class Match <<Match>> {
+    int id_match, rating
+    String name, description
+}
+
+class MatchResult <<MatchResult>> {
+    int result
+    float time
+}
+
+ContentCreator "1" -- "*" Match:creates >
+ContentCreator "1" -- "*" Game:creates >
+
+Player "*" -- "*" Match:play >
+Player "1" -- "*" MatchResult:of <
+
+Match "1" -- "*" MatchResult:of <
+Match "1" -- "1..*" Game:contains >
+@enduml
