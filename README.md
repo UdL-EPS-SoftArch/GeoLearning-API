@@ -28,5 +28,4 @@
 
 
 ## Entities Model
-![Entities Model Diagram]
-(http://www.plantuml.com/plantuml/svg/5Ssn3W8X303GtQ_G3u3kJdU3CIOtN7Bn0ofK8852IXj_NvtU-9QfA6gjdYw5GxL89lMSLSUy0WX-V2gQxMMJ97HMOlMXDtZ6pTtsmntzhQk437Vg6w5muUJM_G4Dfv90B9W4cn__OY6EFxy0)
+![Entities Model Diagram](http://www.plantuml.com/plantuml/svg/5Ssn3W8X303GtQ_G3u3kJdU3CIOtN7Bn0ofK8852IXj_NvtU-9QfA6gjdYw5GxL89lMSLSUy0WX-V2gQxMMJ97HMOlMXDtZ6pTtsmntzhQk437Vg6w5muUJM_G4Dfv90B9W4cn__OY6EFxy0)
