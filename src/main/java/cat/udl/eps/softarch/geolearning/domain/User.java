@@ -22,7 +22,7 @@ import java.util.Collection;
 @Table(name = "DemoUser") //Avoid collision with system table User in Postgres
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class User extends UriEntity<String> implements UserDetails {
+public abstract class User extends UriEntity<String> implements UserDetails {
 
 	public static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -50,12 +50,12 @@ public class User extends UriEntity<String> implements UserDetails {
 	@Override
 	public String getId() { return username; }
 
-	@Override
+	/*@Override
 	@JsonValue(value = false)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
-	}
+	}*/
 
 	@Override
 	public boolean isAccountNonExpired() {
