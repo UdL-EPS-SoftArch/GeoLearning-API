@@ -1,12 +1,6 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import cat.udl.eps.softarch.geolearning.domain.Player;
 import cat.udl.eps.softarch.geolearning.domain.User;
 import cat.udl.eps.softarch.geolearning.repository.UserRepository;
 import io.cucumber.java.en.And;
@@ -17,7 +11,14 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-public class RegisterStepDefs {
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class RegisterPlayerStepDefs {
 
   @Autowired
   private StepDefs stepDefs;
@@ -35,12 +36,12 @@ public class RegisterStepDefs {
   @Given("^There is a registered user with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
   public void thereIsARegisteredUserWithUsernameAndPasswordAndEmail(String username, String password, String email) {
     if (!userRepository.existsById(username)) {
-      User user = new User();
-      user.setEmail(email);
-      user.setUsername(username);
-      user.setPassword(password);
-      user.encodePassword();
-      userRepository.save(user);
+      Player player = new Player();
+      player.setEmail(email);
+      player.setUsername(username);
+      player.setPassword(password);
+      player.encodePassword();
+      userRepository.save(player);
     }
   }
 
@@ -72,15 +73,15 @@ public class RegisterStepDefs {
 
   @When("^I register a new user with username \"([^\"]*)\", email \"([^\"]*)\" and password \"([^\"]*)\"$")
   public void iRegisterANewUserWithUsernameEmailAndPassword(String username, String email, String password) throws Throwable {
-    User user = new User();
-    user.setUsername(username);
-    user.setEmail(email);
+    Player player = new Player();
+    player.setUsername(username);
+    player.setEmail(email);
 
     stepDefs.result = stepDefs.mockMvc.perform(
             post("/users")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(new JSONObject(
-                            stepDefs.mapper.writeValueAsString(user)
+                            stepDefs.mapper.writeValueAsString(player)
                     ).put("password", password).toString())
                     .accept(MediaType.APPLICATION_JSON)
                     .with(AuthenticationStepDefs.authenticate()))
