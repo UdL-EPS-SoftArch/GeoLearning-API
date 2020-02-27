@@ -19,7 +19,5 @@ public interface PlayerRepository extends PagingAndSortingRepository<Player, Str
 
   Player findByEmail(String email);
 
-  Player findByUsername(String text);
-
   List<Player> findByUsernameContaining(@Param("text") String text);
 }

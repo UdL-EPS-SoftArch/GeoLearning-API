@@ -26,14 +26,14 @@ public class RegisterPlayerStepDefs {
   @Autowired
   private UserRepository userRepository;
 
-  @Given("^There is no registered user with username \"([^\"]*)\"$")
-  public void thereIsNoRegisteredUserWithUsername(String user) {
-    Assert.assertFalse("User \""
-                    +  user + "\"shouldn't exist",
-                    userRepository.existsById(user));
+  @Given("^There is no registered player with username \"([^\"]*)\"$")
+  public void thereIsNoRegisteredUserWithUsername(String player) {
+    Assert.assertFalse("player \""
+                    +  player + "\"shouldn't exist",
+                    userRepository.existsById(player));
   }
 
-  @Given("^There is a registered user with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
+  @Given("^There is a registered player with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
   public void thereIsARegisteredUserWithUsernameAndPasswordAndEmail(String username, String password, String email) {
     if (!userRepository.existsById(username)) {
       Player player = new Player();
@@ -71,14 +71,14 @@ public class RegisterPlayerStepDefs {
         .andExpect(status().isUnauthorized());
   }
 
-  @When("^I register a new user with username \"([^\"]*)\", email \"([^\"]*)\" and password \"([^\"]*)\"$")
+  @When("^I register a new player with username \"([^\"]*)\", email \"([^\"]*)\" and password \"([^\"]*)\"$")
   public void iRegisterANewUserWithUsernameEmailAndPassword(String username, String email, String password) throws Throwable {
     Player player = new Player();
     player.setUsername(username);
     player.setEmail(email);
 
     stepDefs.result = stepDefs.mockMvc.perform(
-            post("/users")
+            post("/players")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(new JSONObject(
                             stepDefs.mapper.writeValueAsString(player)
@@ -88,10 +88,10 @@ public class RegisterPlayerStepDefs {
             .andDo(print());
   }
 
-  @And("^It has been created a user with username \"([^\"]*)\" and email \"([^\"]*)\", the password is not returned$")
+  @And("^It has been created a player with username \"([^\"]*)\" and email \"([^\"]*)\", the password is not returned$")
   public void itHasBeenCreatedAUserWithUsername(String username, String email) throws Throwable {
     stepDefs.result = stepDefs.mockMvc.perform(
-            get("/users/{username}", username)
+            get("/players/{username}", username)
                     .accept(MediaType.APPLICATION_JSON)
                     .with(AuthenticationStepDefs.authenticate()))
             .andDo(print())
@@ -99,10 +99,10 @@ public class RegisterPlayerStepDefs {
             .andExpect(jsonPath("$.password").doesNotExist());
   }
 
-  @And("^It has not been created a user with username \"([^\"]*)\"$")
+  @And("^It has not been created a player with username \"([^\"]*)\"$")
   public void itHasNotBeenCreatedAUserWithUsername(String username) throws Throwable {
     stepDefs.result = stepDefs.mockMvc.perform(
-            get("/users/{username}", username)
+            get("/players/{username}", username)
                     .accept(MediaType.APPLICATION_JSON)
                     .with(AuthenticationStepDefs.authenticate()))
             .andExpect(status().isNotFound());

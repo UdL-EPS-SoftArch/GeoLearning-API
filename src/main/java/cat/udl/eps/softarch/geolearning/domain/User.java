@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Collection;
 
 @Entity
-@Table(name = "DemoUser") //Avoid collision with system table User in Postgres
+@Table(name = "GeoLearningUser") //Avoid collision with system table User in Postgres
 @Data
 @EqualsAndHashCode(callSuper = true)
 public abstract class User extends UriEntity<String> implements UserDetails {
