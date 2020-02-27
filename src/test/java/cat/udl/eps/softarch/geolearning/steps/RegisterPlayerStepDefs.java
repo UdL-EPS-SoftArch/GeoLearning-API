@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.geolearning.steps;
 
 import cat.udl.eps.softarch.geolearning.domain.Player;
 import cat.udl.eps.softarch.geolearning.domain.User;
+import cat.udl.eps.softarch.geolearning.repository.PlayerRepository;
 import cat.udl.eps.softarch.geolearning.repository.UserRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -24,24 +25,24 @@ public class RegisterPlayerStepDefs {
   private StepDefs stepDefs;
 
   @Autowired
-  private UserRepository userRepository;
+  private PlayerRepository playerRepository;
 
   @Given("^There is no registered player with username \"([^\"]*)\"$")
   public void thereIsNoRegisteredUserWithUsername(String player) {
     Assert.assertFalse("player \""
                     +  player + "\"shouldn't exist",
-                    userRepository.existsById(player));
+                    playerRepository.existsById(player));
   }
 
   @Given("^There is a registered player with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
   public void thereIsARegisteredUserWithUsernameAndPasswordAndEmail(String username, String password, String email) {
-    if (!userRepository.existsById(username)) {
+    if (!playerRepository.existsById(username)) {
       Player player = new Player();
       player.setEmail(email);
       player.setUsername(username);
       player.setPassword(password);
       player.encodePassword();
-      userRepository.save(player);
+      playerRepository.save(player);
     }
   }
 
