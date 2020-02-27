@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- * The interface TournamentMaster repository.
+ * The interface ContentCreator repository.
  */
 @RepositoryRestResource
 public interface ContentCreatorRepository extends PagingAndSortingRepository<ContentCreator, String> {
@@ -27,7 +27,6 @@ public interface ContentCreatorRepository extends PagingAndSortingRepository<Con
      * @return a player that matches the email
      */
     ContentCreator findByEmail(String email);
-
     /**
      * Find a list of ContentCreator which matches the text.
      *
