@@ -18,7 +18,7 @@ after_success:
     docker build -f Dockerfile -t $REPO:$TRAVIS_COMMIT .;
     docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG;
     docker push $REPO;
-    echo "$HEROKU_TOKEN" | docker login --username=_ --password-stdin registry.heroku.com;
+    echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com;
     docker tag $REPO:$TRAVIS_COMMIT registry.heroku.com/geolearning-api/web;
     docker push registry.heroku.com/geolearning-api/web;
     wget -qO- https://toolbelt.heroku.com/install.sh | sh;
