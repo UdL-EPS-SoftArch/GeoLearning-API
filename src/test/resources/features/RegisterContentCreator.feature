@@ -20,7 +20,7 @@ Feature: Register ContentCreator
     And I cannot login with username "contentcreator" and password "newpassword"
 
   Scenario: Register contentcreator when already authenticated
-    Given I login as "demo" with password "password"
+    Given I login as "creator" with password "password"
     When I register a new contentcreator with username "contentcreator", email "contentcreator@sample.app" and password "password"
     Then The response code is 403
     And It has not been created a contentcreator with username "contentcreator"
