@@ -1,7 +1,10 @@
 package cat.udl.eps.softarch.geolearning.config;
 
+import cat.udl.eps.softarch.geolearning.domain.ContentCreator;
 import cat.udl.eps.softarch.geolearning.domain.User;
+import cat.udl.eps.softarch.geolearning.repository.ContentCreatorRepository;
 import cat.udl.eps.softarch.geolearning.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,31 +13,27 @@ import org.springframework.security.config.annotation.authentication.configurati
 @Configuration
 public class AuthenticationConfig extends GlobalAuthenticationConfigurerAdapter {
 
-  @Value("${default-password}")
-  String defaultPassword;
+    @Value("${default-password}")
+    String defaultPassword;
 
-  final BasicUserDetailsService basicUserDetailsService;
-  final UserRepository userRepository;
+    @Autowired BasicUserDetailsService basicUserDetailsService;
+    @Autowired UserRepository userRepository;
+    @Autowired ContentCreatorRepository contentCreatorRepository;
 
-  public AuthenticationConfig(BasicUserDetailsService basicUserDetailsService, UserRepository userRepository) {
-    this.basicUserDetailsService = basicUserDetailsService;
-    this.userRepository = userRepository;
-  }
+    @Override
+    public void init(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(basicUserDetailsService)
+                .passwordEncoder(User.passwordEncoder);
 
-  @Override
-  public void init(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-        .userDetailsService(basicUserDetailsService)
-        .passwordEncoder(User.passwordEncoder);
-
-    // Sample user
-    if (!userRepository.existsById("demo")) {
-      User player = new User();
-      player.setEmail("demo@sample.app");
-      player.setUsername("demo");
-      player.setPassword(defaultPassword);
-      player.encodePassword();
-      userRepository.save(player);
+        // Sample Content Creator
+        if (!userRepository.existsById("demo")) {
+            User user = new ContentCreator();
+            user.setEmail("demo@sample.app");
+            user.setUsername("demo");
+            user.setPassword(defaultPassword);
+            user.encodePassword();
+            userRepository.save(user);
+        }
     }
-  }
 }
