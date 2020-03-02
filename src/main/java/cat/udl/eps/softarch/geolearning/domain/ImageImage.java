@@ -10,23 +10,12 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.HashMap;
+
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ImageImage extends Game{
 
-	@Id
-	@NotBlank
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@Column
-	private String imageRequest;
 
-	@Column
-	private String imageSolution;
-	
-	
-	
-	
 }

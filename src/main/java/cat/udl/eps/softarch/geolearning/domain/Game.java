@@ -29,9 +29,9 @@ public abstract class Game extends UriEntity<Long> {
 	@NotBlank
 	@Length(min = 10, max = 250)
 	private String instructions;
-	
-	@Column
-	@NotBlank
-	private String tipus;
 
+	@Override
+	public Long getId() {
+		return id;
+	}
 }
