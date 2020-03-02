@@ -8,7 +8,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity(name = "ImageOptions")
+@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ImageOptions extends Game {
