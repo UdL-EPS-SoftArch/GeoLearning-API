@@ -15,7 +15,7 @@ import java.util.HashMap;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Write extends Game{
+public class ImageWrite extends Game{
 
 
 }

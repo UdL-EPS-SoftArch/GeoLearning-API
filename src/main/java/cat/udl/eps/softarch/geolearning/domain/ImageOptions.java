@@ -13,6 +13,6 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Options extends Game {
+public class ImageOptions extends Game {
 
 }
