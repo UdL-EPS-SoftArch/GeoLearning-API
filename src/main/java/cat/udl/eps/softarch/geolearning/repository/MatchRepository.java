@@ -9,10 +9,7 @@ import java.util.Optional;
 
 @RepositoryRestController
 public interface MatchRepository extends PagingAndSortingRepository<Match, Integer> {
-    /**
-     * Find a list of Match results
-     */
-    //List<MatchResult> findByMatch(@Param("match") Match match);
+
     /**
      * Find a Match by id
      * @return

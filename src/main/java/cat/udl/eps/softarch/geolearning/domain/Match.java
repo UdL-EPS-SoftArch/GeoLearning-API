@@ -3,10 +3,8 @@ package cat.udl.eps.softarch.geolearning.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Data
@@ -20,5 +18,10 @@ public class Match extends UriEntity<Integer>{
     private int rating;
     private String name, description;
 
+    @ManyToMany
+    private Set<Player> players = new HashSet<Player>();
+
+    @ManyToOne
+    private ContentCreator contentCreator;
 
 }
