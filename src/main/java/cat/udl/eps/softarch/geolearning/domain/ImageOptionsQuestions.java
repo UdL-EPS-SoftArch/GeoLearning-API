@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ImageOptionsQuestions {
+public class ImageOptionsQuestions extends UriEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotBlank

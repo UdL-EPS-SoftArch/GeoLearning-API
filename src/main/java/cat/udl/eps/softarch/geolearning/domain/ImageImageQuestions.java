@@ -6,11 +6,12 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
+@Entity(name = "ImageImageQuestions")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ImageImageQuestions {
-    @Id
+public class ImageImageQuestions extends UriEntity<Long>{
+   
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotBlank
     private Long id;
