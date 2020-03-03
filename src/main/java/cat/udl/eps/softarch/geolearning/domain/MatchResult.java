@@ -19,6 +19,6 @@ public class MatchResult extends UriEntity<Integer>{
     @ManyToOne
     private Match match;
 
-    @ManyToOne
-    private Player player;
+    /*@ManyToOne
+    private Player player;*/
 }
