@@ -19,61 +19,57 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Collection;
 
 @Entity
-@Table(name = "DemoUser") //Avoid collision with system table User in Postgres
+@Table(name = "GeoLearningUser") //Avoid collision with system table User in Postgres
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class User extends UriEntity<String> implements UserDetails {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class User extends UriEntity<String> implements UserDetails {
 
-	public static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	@Id
-	private String username;
+    @Id
+    private String username;
 
-	@NotBlank
-	@Email
-	@Column(unique = true)
-	private String email;
+    @NotBlank
+    @Email
+    @Column(name = "email", unique = true)
+    private String email;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@NotBlank
-	@Length(min = 8, max = 256)
-	private String password;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotBlank
+    @Length(min = 8, max = 256)
+    private String password;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@Transient
-	private boolean passwordReset;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Transient
+    private boolean passwordReset;
 
-	public void encodePassword() {
-		this.password = passwordEncoder.encode(this.password);
-	}
+    public void encodePassword() {
+        this.password = passwordEncoder.encode(this.password);
+    }
 
-	@Override
-	public String getId() { return username; }
+    @Override
+    public String getId() {
+        return username;
+    }
 
-	@Override
-	@JsonValue(value = false)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
