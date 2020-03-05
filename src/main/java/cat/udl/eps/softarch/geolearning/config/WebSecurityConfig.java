@@ -33,7 +33,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.POST, "/games/*").denyAll()
                     .antMatchers(HttpMethod.POST, "/imageNames").authenticated()
                     .antMatchers(HttpMethod.GET, "/imageNames").authenticated()
-                    .antMatchers(HttpMethod.POST, "/imageNames/*").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageNames/*").authenticated()
                     .antMatchers(HttpMethod.POST, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PUT, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PATCH, "/**/*").authenticated()

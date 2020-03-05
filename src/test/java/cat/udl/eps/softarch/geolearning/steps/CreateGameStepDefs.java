@@ -11,6 +11,9 @@ import cat.udl.eps.softarch.geolearning.repository.GameRepository;
 import cat.udl.eps.softarch.geolearning.repository.UserRepository;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,8 +28,10 @@ public class CreateGameStepDefs {
 	  @Autowired
 	  private GameRepository gameRepository;
 		ImageName imageName1;
-	  
-	  @When("^I create a new ImageName with instructions \"([^\"]*)\"")
+	private String newResourceUri;
+
+
+	@When("^I create a new ImageName with instructions \"([^\"]*)\"")
 	    public void iCreateANewImageNameWithInstructions(String instructions) throws Throwable {
 	        imageName1 = new ImageName();
 	        imageName1.setInstructions(instructions);
@@ -38,12 +43,13 @@ public class CreateGameStepDefs {
 							.accept(MediaType.APPLICATION_JSON)
 							.with(AuthenticationStepDefs.authenticate()))
 					.andDo(print());
+		  	newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
 	    }
 	  
 	    @And("^It has been created a ImageName with instructions \\\"([^\\\"]*)\\\"")
 	    public void itHasBeenCreatedAImageNameWithInstructions(String instructions) throws Throwable {
 	        stepDefs.result = stepDefs.mockMvc.perform(
-	                get("/imageNames/{id}", imageName1.getId())
+	                get(newResourceUri)
 	                        .accept(MediaType.APPLICATION_JSON)
 	                        .with(AuthenticationStepDefs.authenticate()))
 	                .andDo(print())
