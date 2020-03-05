@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ImageOptions extends Game {
+public class ImageOption extends Game {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageOptionsQuestions> questions = new ArrayList<>();
