@@ -12,19 +12,18 @@ import lombok.EqualsAndHashCode;
 @Table(name = "Game")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class Game extends UriEntity<Long> {
+public abstract class Game extends UriEntity<Integer> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotBlank
-	private Long id;
+	private Integer id;
 	
 	@NotBlank
 	@Length(min = 10, max = 250)
 	private String instructions;
 
 	@Override
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 }

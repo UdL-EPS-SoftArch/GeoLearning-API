@@ -24,26 +24,27 @@ public class CreateGameStepDefs {
 
 	  @Autowired
 	  private GameRepository gameRepository;
+		ImageName imageName1;
 	  
 	  @When("^I create a new ImageName with instructions \"([^\"]*)\"")
 	    public void iCreateANewImageNameWithInstructions(String instructions) throws Throwable {
-	        Game imageName1 = new ImageName(); 
+	        imageName1 = new ImageName();
 	        imageName1.setInstructions(instructions);
 	        stepDefs.result = stepDefs.mockMvc.perform(
-	                post("/game")
-	                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-	                        .content(
-	                                stepDefs.mapper.writeValueAsString(imageName1))
-	                        .accept(MediaType.APPLICATION_JSON_UTF8)
-	                        .with(AuthenticationStepDefs.authenticate()))
-	                .andDo(print());
+	                post("/imageNames")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content(
+									stepDefs.mapper.writeValueAsString(imageName1))
+							.accept(MediaType.APPLICATION_JSON)
+							.with(AuthenticationStepDefs.authenticate()))
+					.andDo(print());
 	    }
 	  
 	    @And("^It has been created a ImageName with instructions \\\"([^\\\"]*)\\\"")
 	    public void itHasBeenCreatedAImageNameWithInstructions(String instructions) throws Throwable {
 	        stepDefs.result = stepDefs.mockMvc.perform(
-	                get("/game/{imageName}", 1L)
-	                        .accept(MediaType.APPLICATION_JSON_UTF8)
+	                get("/imageNames/{id}", imageName1.getId())
+	                        .accept(MediaType.APPLICATION_JSON)
 	                        .with(AuthenticationStepDefs.authenticate()))
 	                .andDo(print())
 	                .andExpect(jsonPath("$.instructions", is(instructions)));
