@@ -12,6 +12,7 @@ skinparam class {
     BackgroundColor<<Game>> LightGreen
     BackgroundColor<<Match>> LightPink
     BackgroundColor<<MatchResult>> LightPink
+    BackgroundColor<<Options>> LightYellow
 }
 
 
@@ -19,25 +20,42 @@ abstract class User <<User>> {
     String username, password, email
 }
 
-class ContentCreator <<User>> extends User {}
+class ContentCreator <<User>> extends User {
+}
 
-class Player <<User>> extends User {}
+class Player <<User>> extends User {
+}
 
 abstract class Game <<Game>> {
-    int id_game
     String instructions
 }
 
-class ImageName <<Game>> extends Game {}
+class ImageName <<Game>> extends Game {
+}
 
-class Write <<Game>> extends Game {}
+class Write <<Game>> extends Game {
+}
 
-class ImageImage <<Game>> extends Game {}
+class ImageImage <<Game>> extends Game {
+}
 
-class Options <<Game>> extends Game {}
+class Options <<Game>> extends Game {
+}
+
+class ImageImageQuestion <<Options>>{
+    String image, solution
+}
+
+class ImageNameWriteQuestion <<Options>>{
+    String image, solution
+}
+
+class ImageOptionsQuestion <<Options>>{
+    String image, solution, optionA, optionB, optionC, optionD, optionE
+}
 
 class Match <<Match>> {
-    int id_match, rating
+    int rating
     String name, description
 }
 
@@ -54,4 +72,10 @@ Player "1" -- "*" MatchResult:of <
 
 Match "1" -- "*" MatchResult:of <
 Match "1" -- "1..*" Game:contains >
+
+Write "1" -- "*" ImageNameWriteQuestion:have >
+ImageName "1" -- "*" ImageNameWriteQuestion:have >
+ImageImage "1" -- "*" ImageImageQuestion:have >
+Options "1" -- "*" ImageOptionsQuestion:have >
+
 @enduml
