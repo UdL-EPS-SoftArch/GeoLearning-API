@@ -18,10 +18,10 @@ public class Match extends UriEntity<Integer>{
     private int rating;
     private String name, description;
 
-    /*@ManyToMany
+    @ManyToMany
     private Set<Player> players = new HashSet<Player>();
 
     @ManyToOne
-    private ContentCreator contentCreator;*/
+    private ContentCreator contentCreator;
 
 }
