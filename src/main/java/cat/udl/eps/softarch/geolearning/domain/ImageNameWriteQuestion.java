@@ -9,11 +9,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ImageNameWriteQuestions extends UriEntity<Long> {
+public class ImageNameWriteQuestion extends UriEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotBlank
-    private Long id;
+    private Integer id;
 
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
@@ -23,4 +22,9 @@ public class ImageNameWriteQuestions extends UriEntity<Long> {
     @Column
     @NotBlank
     private String solution;
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
 }

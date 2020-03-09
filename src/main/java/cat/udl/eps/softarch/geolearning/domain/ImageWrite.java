@@ -14,5 +14,5 @@ import java.util.List;
 public class ImageWrite extends Game{
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImageNameWriteQuestions> questions = new ArrayList<>();
+    private List<ImageNameWriteQuestion> questions = new ArrayList<>();
 }
