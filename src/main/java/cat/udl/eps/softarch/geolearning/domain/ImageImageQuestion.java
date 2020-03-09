@@ -6,15 +6,13 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity(name = "ImageImageQuestions")
+@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ImageImageQuestions extends UriEntity<Long>{
-   
+public class ImageImageQuestion extends UriEntity<Integer>{
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotBlank
-    private Long id;
+    private Integer id;
 
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
@@ -25,4 +23,9 @@ public class ImageImageQuestions extends UriEntity<Long>{
     @Size(max = 5 * 1024 * 1024) // 5MB
     @NotBlank
     private String solution;
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
 }

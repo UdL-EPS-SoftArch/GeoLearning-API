@@ -14,5 +14,5 @@ import lombok.EqualsAndHashCode;
 public class ImageOption extends Game {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImageOptionsQuestions> questions = new ArrayList<>();
+    private List<ImageOptionQuestion> questions = new ArrayList<>();
 }
