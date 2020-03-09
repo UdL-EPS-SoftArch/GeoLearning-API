@@ -1,4 +1,5 @@
-FROM openjdk:11-jre-alpine
+FROM openjdk:11-jre-slim
+
 WORKDIR /home/app
 
 ADD ./target/*.jar ./app.jar
