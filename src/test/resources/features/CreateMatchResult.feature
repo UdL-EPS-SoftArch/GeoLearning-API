@@ -4,13 +4,24 @@ Feature: CreateMatchResult
   I want to see the result of a Match
 
   Background:
-    Given There is a player
-    And There is a match
+    Given There is a player "user1" with password "password"
+    And There is a match "matchName"
 
 
-  Scenario: Assign a MatchResult to a match
-    Given  There is no registered matchResult for this Match
-    And   I login as "demoP" with password "password"
-    When  Its registeed a new MatchResult with result "result"
-    Then  The response code is 201
-    And   There is a registered MatchResult with "result" for this match
+  Scenario: Play a Match
+    Given  There is no registered matchResult for match "matchName" attached to "user1"
+    And   I login as "user1" with password "password"
+    When  The match "matchName" is finished with a matchResult with result "result1" and time "time1"
+    Then  There is a registered matchResult with result "result1" and time "time1" for "matchName" attached to "user1"
+
+  Scenario: Play a Match
+    Given  There is a registered matchResult for match "matchName" attached to "user1" with result "result1" and time "time1"
+    And   I login as "user1" with password "password"
+    When  The match "matchName" is finished with a matchResult with result "result2" and time "time2"
+    Then  There is a registered matchResult with result "result2" and time "time2" for "matchName" attached to "user1"
+
+  Scenario: Play a Match
+    Given  There is a registered matchResult for match "matchName" attached to "user1" with result "result2" and time "time2"
+    And   I login as "user1" with password "password"
+    When  The match "matchName" is finished with a matchResult with result "result3" and time "time3"
+    Then  There is a registered matchResult with result "result2" and time "time2" for "matchName" attached to "user1"
