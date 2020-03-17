@@ -1,6 +1,5 @@
 package cat.udl.eps.softarch.geolearning.repository;
 
-import cat.udl.eps.softarch.geolearning.domain.ImageImage;
 import cat.udl.eps.softarch.geolearning.domain.ImageImageQuestion;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -16,5 +15,7 @@ public interface ImageImageQuestionRepository extends PagingAndSortingRepository
 	   */
 
     //Optional<ImageName> findById(@Param("id") Integer id);
-    
+	//ImageImageQuestion findByQu(String instructions);
+
+
 }

@@ -19,6 +19,6 @@ public interface ImageImageRepository extends PagingAndSortingRepository<ImageIm
 	   * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 	   */
 
-	//Optional<ImageImage> findByInstructions(@Param("instructions") String instructions);
+	ImageImage findByInstructions(@Param("instructions") String instructions);
     
 }
