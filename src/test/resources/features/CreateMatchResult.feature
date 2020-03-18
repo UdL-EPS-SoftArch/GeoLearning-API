@@ -5,11 +5,10 @@ Feature: CreateMatchResult
 
   Background:
     Given There is a player "user1" with password "password"
-    And There is a match "matchName"
-
+    And There is a match with  id 1
 
   Scenario: Play a Match
-    Given  There is no registered matchResult for match "matchName" attached to "user1"
+    Given  There is no registered matchResult for match 1 attached to "user1"
     And   I login as "user1" with password "password"
     When  The match "matchName" is finished with a matchResult with result "result1" and time "time1"
     Then  There is a registered matchResult with result "result1" and time "time1" for "matchName" attached to "user1"
