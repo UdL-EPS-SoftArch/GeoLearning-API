@@ -40,22 +40,23 @@ public class CreateMatchResultStepDefs {
         }
     }
 
-    @Given("There is no registered matchResult for match {int} attached to {string}")
-    public void thereIsNoRegisteredMatchResultForMatchAttachedTo(Integer arg0, String arg1) {
-        
+    @Given("There is no registered matchResult for this match attached to the player")
+    public void thereIsNoRegisteredMatchResultForThisMatchAttachedToThePlayer() {
+
     }
 
-    @When("The match {string} is finished with a matchResult with result {string} and time {string}")
-    public void theMatchIsFinishedWithAMatchResultWithResultAndTime(String arg0, String arg1, String arg2) {
-        
+    @When("The match is finished with a matchResult with result {string} and time {string}")
+    public void theMatchIsFinishedWithAMatchResultWithResultAndTime(String arg0, String arg1) {
+
     }
 
-    @Then("There is a registered matchResult with result {string} and time {string} for {string} attached to {string}")
-    public void thereIsARegisteredMatchResultWithResultAndTimeForAttachedTo(String arg0, String arg1, String arg2, String arg3) {
-        
+    @Then("There is a registered matchResult with result {string} and time {string} for this match attached to the player")
+    public void thereIsARegisteredMatchResultWithResultAndTimeForThisMatchAttachedToThePlayer(String arg0, String arg1) {
+
     }
 
-    @Given("There is a registered matchResult for match {string} attached to {string} with result {string} and time {string}")
-    public void thereIsARegisteredMatchResultForMatchAttachedToWithResultAndTime(String arg0, String arg1, String arg2, String arg3) {
+    @Given("There is a registered matchResult for this match attached to the player with result {string} and time {string}")
+    public void thereIsARegisteredMatchResultForThisMatchAttachedToThePlayerWithResultAndTime(String arg0, String arg1) {
+
     }
 }
