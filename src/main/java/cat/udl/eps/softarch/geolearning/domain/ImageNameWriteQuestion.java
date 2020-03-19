@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 public class ImageNameWriteQuestion extends UriEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer inwq_id;
 
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
@@ -25,6 +25,6 @@ public class ImageNameWriteQuestion extends UriEntity<Integer> {
 
     @Override
     public Integer getId() {
-        return id;
+        return inwq_id;
     }
 }

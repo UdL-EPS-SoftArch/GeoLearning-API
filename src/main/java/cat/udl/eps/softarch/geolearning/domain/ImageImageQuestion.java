@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 public class ImageImageQuestion extends UriEntity<Integer>{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer iiq_id;
 
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
@@ -26,6 +26,6 @@ public class ImageImageQuestion extends UriEntity<Integer>{
 
     @Override
     public Integer getId() {
-        return id;
+        return iiq_id;
     }
 }

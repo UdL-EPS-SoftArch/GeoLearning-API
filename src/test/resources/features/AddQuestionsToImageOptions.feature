@@ -8,3 +8,5 @@ Feature: Add Questions to ImageOption
     And  There is a created ImageOption with instructions "Relacionar bandera con paises"
     And There is a ImageOptionQuestion with image "spain.png", solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
     When Content Creator add ImageOptionQuestion with image "spain.png", solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium" to a ImageOption with instructions "Relacionar bandera con paises"
+    Then The response code is 204
+    And There is a ImageOptionQuestion with image "spain.png", solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium" to a ImageOption with instructions "Relacionar bandera con paises"

@@ -57,4 +57,11 @@ public class AddQuestionsToImageOptionStepDefs {
     }
 
 
+    @And("There is a ImageOptionQuestion with image {string}, solution {string} and  optionA {string}, optionB {string}, optionC {string}, optionD {string}, optionE {string} to a ImageOption with instructions {string}")
+    public void thereIsAImageOptionQuestionWithImageSolutionAndOptionAOptionBOptionCOptionDOptionEToAImageOptionWithInstructions(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7) throws Throwable{
+        stepDefs.result = stepDefs.mockMvc.perform(
+                get(newResourceUriI+"/questions/{id}", newResourceUriPatch)
+                        .accept(MediaType.APPLICATION_JSON)).andDo(print())
+                .andExpect(status().isOk());
+    }
 }

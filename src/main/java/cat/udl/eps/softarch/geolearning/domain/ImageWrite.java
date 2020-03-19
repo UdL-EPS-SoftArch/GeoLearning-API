@@ -14,6 +14,6 @@ import java.util.List;
 public class ImageWrite extends Game{
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "game_id")
     private List<ImageNameWriteQuestion> questions = new ArrayList<>();
 }
