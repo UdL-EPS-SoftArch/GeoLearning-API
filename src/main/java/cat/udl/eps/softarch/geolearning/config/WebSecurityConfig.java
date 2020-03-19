@@ -33,9 +33,33 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.POST, "/players/*").denyAll()
                     .antMatchers(HttpMethod.POST, "/games").anonymous()
                     .antMatchers(HttpMethod.POST, "/games/*").denyAll()
-                    .antMatchers(HttpMethod.POST, "/imageNames").authenticated()
+
+                    .antMatchers(HttpMethod.POST, "/imageNames").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.GET, "/imageNames").authenticated()
                     .antMatchers(HttpMethod.GET, "/imageNames/*").authenticated()
+
+                    .antMatchers(HttpMethod.POST, "/imageImages").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageImages").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.GET, "/imageImages").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageImages/*").authenticated()
+
+                    .antMatchers(HttpMethod.POST, "/imageOptions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageOptions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.GET, "/imageOptions").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageOptions/*").authenticated()
+
+                    .antMatchers(HttpMethod.POST, "/imageImageQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageImageQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageImageQuestions/*").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.GET, "/imageImageQuestions").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageImageQuestions/*").authenticated()
+
+                    .antMatchers(HttpMethod.POST, "/imageOptionQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageOptionQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageOptionQuestions/*").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.GET, "/imageOptionQuestions").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageOptionQuestions/*").authenticated()
+
                     .antMatchers(HttpMethod.POST, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PUT, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PATCH, "/**/*").authenticated()

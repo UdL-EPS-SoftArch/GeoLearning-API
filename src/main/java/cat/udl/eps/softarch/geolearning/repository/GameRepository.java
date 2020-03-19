@@ -1,11 +1,8 @@
 package cat.udl.eps.softarch.geolearning.repository;
 
-import java.util.Optional;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 
 import cat.udl.eps.softarch.geolearning.domain.Game;
 
@@ -19,6 +16,4 @@ public interface GameRepository extends PagingAndSortingRepository<Game, Integer
 	   * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 	   */
 
-    //Optional<Game> findById(@Param("id") Integer id);
-    
 }
