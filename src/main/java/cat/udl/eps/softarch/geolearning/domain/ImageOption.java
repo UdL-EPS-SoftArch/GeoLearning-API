@@ -15,5 +15,5 @@ public class ImageOption extends Game {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id")
-    private List<ImageOptionQuestion> questions = new ArrayList<>();
+    private List<ImageOptionQuestion> questions;
 }

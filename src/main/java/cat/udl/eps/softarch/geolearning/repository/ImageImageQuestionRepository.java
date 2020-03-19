@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.geolearning.repository;
 
+import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
 import cat.udl.eps.softarch.geolearning.domain.ImageImageQuestion;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

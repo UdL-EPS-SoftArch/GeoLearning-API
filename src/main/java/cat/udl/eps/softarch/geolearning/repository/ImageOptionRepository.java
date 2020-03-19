@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.geolearning.repository;
 
+import cat.udl.eps.softarch.geolearning.domain.ImageImage;
 import cat.udl.eps.softarch.geolearning.domain.ImageOption;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +20,8 @@ public interface ImageOptionRepository extends PagingAndSortingRepository<ImageO
 
 
 	//Optional<ImageOption> findByInstructions(@Param("instructions") String instructions);
+	ImageOption findByInstructions(@Param("instructions") String instructions);
+
 
 
 }

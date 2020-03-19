@@ -1,0 +1,51 @@
+package cat.udl.eps.softarch.geolearning.steps;
+
+import cat.udl.eps.softarch.geolearning.domain.ImageImageQuestion;
+import cat.udl.eps.softarch.geolearning.domain.ImageOption;
+import cat.udl.eps.softarch.geolearning.domain.ImageOptionQuestion;
+import cat.udl.eps.softarch.geolearning.repository.ImageImageRepository;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+public class CreateImageOptionQuestionStepDefs {
+
+    @Autowired
+    private StepDefs stepDefs;
+
+
+    public String newResourceUri;
+
+
+    public String getNewResourceUri(){
+        return newResourceUri;
+    }
+
+    @When("I create a new ImageOptionQuestion with image {string}  solution {string} and  optionA {string}, optionB {string}, optionC {string}, optionD {string}, optionE {string}")
+    public void i_create_a_new_ImageOptionQuestion_with_image_solution_and_optionA_optionB_optionC_optionD_optionE(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6) throws Throwable {
+        ImageOptionQuestion iiQ = new ImageOptionQuestion();
+        iiQ.setImage(arg0);
+        iiQ.setSolution(arg1);
+        iiQ.setOptionA(arg2);
+        iiQ.setOptionB(arg3);
+        iiQ.setOptionC(arg4);
+        iiQ.setOptionD(arg5);
+        iiQ.setOptionE(arg6);
+        stepDefs.result = stepDefs.mockMvc.perform(
+                post("/imageOptionsQuestions")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                stepDefs.mapper.writeValueAsString(iiQ))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
+        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+    }
+}

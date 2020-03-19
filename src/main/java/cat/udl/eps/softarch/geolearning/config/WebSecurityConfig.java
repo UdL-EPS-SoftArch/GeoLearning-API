@@ -54,6 +54,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.GET, "/imageImageQuestions").authenticated()
                     .antMatchers(HttpMethod.GET, "/imageImageQuestions/*").authenticated()
 
+                    .antMatchers(HttpMethod.POST, "/imageOptionsQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageOptionsQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageOptionsQuestions/*").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.GET, "/imageOptionsQuestions").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageOptionsQuestions/*").authenticated()
+
                     .antMatchers(HttpMethod.POST, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PUT, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PATCH, "/**/*").authenticated()
