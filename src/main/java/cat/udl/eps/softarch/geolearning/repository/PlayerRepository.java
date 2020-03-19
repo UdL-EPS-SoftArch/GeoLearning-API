@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.geolearning.repository;
 
+import cat.udl.eps.softarch.geolearning.domain.Match;
 import cat.udl.eps.softarch.geolearning.domain.Player;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,6 @@ public interface PlayerRepository extends PagingAndSortingRepository<Player, Str
   Player findByEmail(String email);
 
   List<Player> findByUsernameContaining(@Param("text") String text);
+
+  List<Player> findByPlayedMatchesContaining(@Param("playedMatches") Match match);
 }

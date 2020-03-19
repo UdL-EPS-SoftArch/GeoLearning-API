@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -15,13 +17,29 @@ public class Match extends UriEntity<Integer>{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private int rating;
-    private String name, description;
+    @Column(unique = true, nullable = false)
+    @NotBlank
+    private String name;
+
+    @NotNull
+    private Integer rating;
+
+    private String description;
 
     @ManyToMany
-    private Set<Player> players = new HashSet<Player>();
+    private List<Game> games = new ArrayList<>();
 
     @ManyToOne
     private ContentCreator contentCreator;
+
+    public Match(){
+        super();
+    }
+
+    public Match(String name, String description, Integer rating){
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+    }
 
 }
