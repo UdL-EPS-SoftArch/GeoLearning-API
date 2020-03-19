@@ -5,7 +5,7 @@ Feature: Create ImageOptionQuestion
 
   Scenario: Create new ImageOptionQuestion
     Given I login as "creator" with password "password"
-    When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "", optionE "Belgium"
+    When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
     Then The response code is 201
     And It has been created a ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
 
@@ -21,43 +21,43 @@ Feature: Create ImageOptionQuestion
     Then The response code is 401
     And It has not been created a ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty image
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image ""  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
     Then The response code is 400
     And The error message is "must not be blank"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty solution
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image "spain.png"  solution "" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
     Then The response code is 400
     And The error message is "must not be blank"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty optionA
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "", optionB "spain", optionC "germany", optionD "holland", optionE "Belgium"
     Then The response code is 400
     And The error message is "must not be blank"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty optionB
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "", optionC "germany", optionD "holland", optionE "Belgium"
     Then The response code is 400
     And The error message is "must not be blank"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty optionC
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "", optionD "holland", optionE "Belgium"
     Then The response code is 400
     And The error message is "must not be blank"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty optionD
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "", optionE "Belgium"
     Then The response code is 400
     And The error message is "must not be blank"
 
-  Scenario: Create new ImageOptionQuestion without empty image
+  Scenario: Create new ImageOptionQuestion with empty optionE
     Given I login as "creator" with password "password"
     When I create a new ImageOptionQuestion with image "spain.png"  solution "spain" and  optionA "italy", optionB "spain", optionC "germany", optionD "holland", optionE ""
     Then The response code is 400
