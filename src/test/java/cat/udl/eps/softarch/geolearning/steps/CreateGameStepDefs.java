@@ -29,32 +29,6 @@ public class CreateGameStepDefs {
 	  private GameRepository gameRepository;
 		ImageName imageName1;
 	private String newResourceUri;
-
-
-	@When("^I create a new ImageName with instructions \"([^\"]*)\"")
-	    public void iCreateANewImageNameWithInstructions(String instructions) throws Throwable {
-	        imageName1 = new ImageName();
-	        imageName1.setInstructions(instructions);
-	        stepDefs.result = stepDefs.mockMvc.perform(
-	                post("/imageNames")
-							.contentType(MediaType.APPLICATION_JSON)
-							.content(
-									stepDefs.mapper.writeValueAsString(imageName1))
-							.accept(MediaType.APPLICATION_JSON)
-							.with(AuthenticationStepDefs.authenticate()))
-					.andDo(print());
-		  	newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
-	    }
-	  
-	    @And("^It has been created a ImageName with instructions \\\"([^\\\"]*)\\\"")
-	    public void itHasBeenCreatedAImageNameWithInstructions(String instructions) throws Throwable {
-	        stepDefs.result = stepDefs.mockMvc.perform(
-	                get(newResourceUri)
-	                        .accept(MediaType.APPLICATION_JSON)
-	                        .with(AuthenticationStepDefs.authenticate()))
-	                .andDo(print())
-	                .andExpect(jsonPath("$.instructions", is(instructions)));
-	    }
 	  
 	  
 }

@@ -2,6 +2,8 @@ package cat.udl.eps.softarch.geolearning.steps;
 
 import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
 import cat.udl.eps.softarch.geolearning.repository.ImageNameWriteQuestionRepository;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,13 +15,17 @@ import cat.udl.eps.softarch.geolearning.repository.GameRepository;
 import cat.udl.eps.softarch.geolearning.repository.UserRepository;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultHandler;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -69,12 +75,7 @@ public class CreateImageNameGameStepDefs {
 
     @And("^It has not been created an ImageName")
     public void itHasNotBeenCreatedAnImageName() throws Throwable {
-        stepDefs.result = stepDefs.mockMvc.perform(
-                get(newResourceUri)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print())
-                .andExpect(status().isNotFound());      //Això pot ser que no funcioni
+        assert newResourceUri == null;
     }
 
     @When("^I create a new ImageName without instructions")
@@ -91,7 +92,7 @@ public class CreateImageNameGameStepDefs {
         newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 
-    @When("I create a new ImageName with instructions \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\"")
+    @When("^I create a new ImageName with instructions \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\"")
     public void iCreateANewImageWithInstructionsAndQuestions(String instructions, String image1, String response1, String image2, String response2) throws Throwable {
         imageName = new ImageName();
         imageName.setInstructions(instructions);
