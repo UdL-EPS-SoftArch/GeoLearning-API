@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ImageOption extends Game {
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "game_id")
     private List<ImageOptionQuestion> questions = new ArrayList<>();
 }

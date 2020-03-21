@@ -1,6 +1,5 @@
 package cat.udl.eps.softarch.geolearning.repository;
 
-import cat.udl.eps.softarch.geolearning.domain.ImageImageQuestion;
 import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -14,7 +13,4 @@ public interface ImageNameWriteQuestionRepository extends PagingAndSortingReposi
 	   * Additional methods following the syntax defined in
 	   * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 	   */
-
-    //Optional<ImageName> findById(@Param("id") Integer id);
-    
 }

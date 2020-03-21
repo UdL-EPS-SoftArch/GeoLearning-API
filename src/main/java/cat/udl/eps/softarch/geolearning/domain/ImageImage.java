@@ -14,6 +14,7 @@ import java.util.List;
 public class ImageImage extends Game{
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "game_id")
     private List<ImageImageQuestion> questions = new ArrayList<>();
 
 }
