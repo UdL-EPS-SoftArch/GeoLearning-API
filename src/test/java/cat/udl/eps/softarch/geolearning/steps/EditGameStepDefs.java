@@ -18,14 +18,17 @@ public class EditGameStepDefs {
 	@Autowired
 	private StepDefs stepDefs;
 	
-	@When("I edit the ImageName with id {string} and set the instruccions at {string}")
-	public void i_edit_the_ImageName_with_id_and_set_the_instruccions_at(String id, String instruccions) throws Throwable {
+	@Autowired
+	private CreateGameStepDefs createGameStepDefs;
+	
+	@When("I edit the ImageName and set the instruccions at {string}")
+	public void i_edit_the_ImageName_and_set_the_instruccions_at(String instruccions) throws Throwable {
 		
 		JSONObject data = new JSONObject();
 		data.put("instructions", instruccions);
 		
 		stepDefs.result = stepDefs.mockMvc.perform(
-				patch("/imageNames/{id}", id)
+				patch(createGameStepDefs.newResourceUri)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(data.toString())
 				.accept(MediaType.APPLICATION_JSON)
@@ -33,15 +36,63 @@ public class EditGameStepDefs {
 				.andDo(print());
 	}
 
-	@Then("The ImageName with id {string} has the instructions at {string}")
-	public void the_ImageName_with_id_has_the_instructions_at(String id, String instruccions) throws Throwable {
+	@Then("The ImageName has the instructions at {string}")
+	public void the_ImageName_has_the_instructions_at(String instruccions) throws Throwable {
 	    
         stepDefs.result = stepDefs.mockMvc.perform(
-                get("/imageNames/{id}", id)
+                get(createGameStepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
                 .andExpect(jsonPath("$.instructions", is(instruccions)));
 	}
 	
+	@When("I edit the ImageImage and set the instructions at {string}")
+	public void i_edit_the_ImageImage_and_set_the_instructions_at(String instruccions) throws Throwable {
+		JSONObject data = new JSONObject();
+		data.put("instructions", instruccions);
+		
+		stepDefs.result = stepDefs.mockMvc.perform(
+				patch(createGameStepDefs.newResourceUri)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(data.toString())
+				.accept(MediaType.APPLICATION_JSON)
+				.with(AuthenticationStepDefs.authenticate()))
+				.andDo(print());
+	}
+
+	@Then("The ImageImage has the instructions at {string}")
+	public void the_ImageImage_has_the_instructions_at(String instruccions) throws Throwable {
+        stepDefs.result = stepDefs.mockMvc.perform(
+                get(createGameStepDefs.newResourceUri)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(jsonPath("$.instructions", is(instruccions)));
+	}
+
+	@When("I edit the ImageOption and set the instructions at {string}")
+	public void i_edit_the_ImageOption_and_set_the_instructions_at(String instruccions) throws Throwable {
+		JSONObject data = new JSONObject();
+		data.put("instructions", instruccions);
+		
+		stepDefs.result = stepDefs.mockMvc.perform(
+				patch(createGameStepDefs.newResourceUri)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(data.toString())
+				.accept(MediaType.APPLICATION_JSON)
+				.with(AuthenticationStepDefs.authenticate()))
+				.andDo(print());
+	}
+
+	@Then("The ImageOption has the instructions at {string}")
+	public void the_ImageOption_has_the_instructions_at(String instruccions) throws Throwable {
+        stepDefs.result = stepDefs.mockMvc.perform(
+                get(createGameStepDefs.newResourceUri)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(jsonPath("$.instructions", is(instruccions)));
+	}
+
 }
