@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ImageNameWriteQuestion extends UriEntity<Integer> {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer inwq_id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "imageName_id", nullable = false)
@@ -30,6 +30,6 @@ public class ImageNameWriteQuestion extends UriEntity<Integer> {
 
     @Override
     public Integer getId() {
-        return id;
+        return inwq_id;
     }
 }
