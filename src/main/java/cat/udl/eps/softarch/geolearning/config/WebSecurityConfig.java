@@ -34,9 +34,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.POST, "/games").anonymous()
                     .antMatchers(HttpMethod.POST, "/games/*").denyAll()
 
-                    .antMatchers(HttpMethod.POST, "/imageNames").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.GET, "/imageNames").authenticated()
-                    .antMatchers(HttpMethod.GET, "/imageNames/*").authenticated()
+                    .antMatchers(HttpMethod.POST, "/imageNames/*").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.POST, "/imageNames").hasRole("CONTENTCREATOR")
 
                     .antMatchers(HttpMethod.POST, "/imageImages").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.PATCH, "/imageImages").hasRole("CONTENTCREATOR")
