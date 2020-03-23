@@ -17,8 +17,8 @@ import lombok.EqualsAndHashCode;
 public abstract class Game extends UriEntity<Integer> {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer game_id;
 	
 	@NotBlank
 	@Length(min = 10, max = 250)
@@ -26,6 +26,6 @@ public abstract class Game extends UriEntity<Integer> {
 
 	@Override
 	public Integer getId() {
-		return id;
+		return game_id;
 	}
 }
