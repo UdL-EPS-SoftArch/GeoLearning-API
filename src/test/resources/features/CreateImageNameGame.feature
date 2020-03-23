@@ -12,7 +12,7 @@ Feature: ImageName
   Scenario: Create with normal user
     Given I login as "demo" with password "password"
     When I create a new ImageName with instructions "Relacionar bandera con paises"
-    Then The response code is 401
+    Then The response code is 403
     And It has not been created an ImageName
 
   Scenario: Create with Content Creator and no instructions

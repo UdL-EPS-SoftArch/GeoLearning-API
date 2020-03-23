@@ -22,6 +22,6 @@ public class ContentCreator extends User {
     @JsonValue(value = false)
     @JsonProperty(access = Access.READ_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("CONTENT_CREATOR");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_CONTENTCREATOR");
     }
 }
