@@ -3,7 +3,7 @@ Feature: ImageName
   As a content creator
   I want to create an ImageName Game
 
-  Scenario: Create with a login
+  Scenario: Create without a login
     Given I'm not logged in
     When I create a new ImageName with instructions "Relacionar bandera con paises"
     Then The response code is 401

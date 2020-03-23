@@ -14,6 +14,11 @@ public class ImageNameWriteQuestion extends UriEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imageName_id", nullable = false)
+    ImageName imageName;
+
+
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
     @NotBlank

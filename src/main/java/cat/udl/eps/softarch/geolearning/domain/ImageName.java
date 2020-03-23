@@ -1,11 +1,11 @@
 package cat.udl.eps.softarch.geolearning.domain;
 
-import javax.persistence.*;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -13,6 +13,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ImageName extends Game {
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImageNameWriteQuestion> questions = new ArrayList<>();
+    @OneToMany(mappedBy = "imageName" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ImageNameWriteQuestion> questions;
 }

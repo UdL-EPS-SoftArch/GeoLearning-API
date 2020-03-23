@@ -23,7 +23,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -96,23 +98,15 @@ public class CreateImageNameGameStepDefs {
     public void iCreateANewImageWithInstructionsAndQuestions(String instructions, String image1, String response1, String image2, String response2) throws Throwable {
         imageName = new ImageName();
         imageName.setInstructions(instructions);
-        imageNameWriteQuestion1 = new ImageNameWriteQuestion();
-        imageNameWriteQuestion2 = new ImageNameWriteQuestion();
 
+        imageNameWriteQuestion1 = new ImageNameWriteQuestion();
         imageNameWriteQuestion1.setImage(image1);
         imageNameWriteQuestion1.setSolution(response1);
+        imageNameWriteQuestion1.setImageName(imageName);
+        imageNameWriteQuestion2 = new ImageNameWriteQuestion();
         imageNameWriteQuestion2.setImage(image2);
         imageNameWriteQuestion2.setSolution(response2);
-
-        //No sabem si hem de fer el set, ja que no sabem si relacionara la llista amb el que estem guardant a la base de dades
-        //ImageNameWriteQuestionRepository.save(imageNameWriteQuestion1);
-        //ImageNameWriteQuestionRepository.save(imageNameWriteQuestion2);
-        
-        List<ImageNameWriteQuestion> questions = new ArrayList<>();
-        questions.add(imageNameWriteQuestion1);
-        questions.add(imageNameWriteQuestion2);
-        
-        imageName.setQuestions(questions);
+        imageNameWriteQuestion2.setImageName(imageName);
 
         stepDefs.result = stepDefs.mockMvc.perform(
                 post("/imageNames")
@@ -123,6 +117,7 @@ public class CreateImageNameGameStepDefs {
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
         newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+
     }
 
     @And("^It has been created a ImageName with instructions \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\"")

@@ -22,6 +22,6 @@ public class Player extends User {
     @JsonValue(value = false)
     @JsonProperty(access = Access.READ_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_PLAYER");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("PLAYER");
     }
 }
