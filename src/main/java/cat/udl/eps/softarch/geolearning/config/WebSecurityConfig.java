@@ -35,8 +35,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.POST, "/games/*").denyAll()
 
                     .antMatchers(HttpMethod.GET, "/imageNames").authenticated()
-                    .antMatchers(HttpMethod.POST, "/imageNames/*").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.GET, "/imageNames/*").authenticated()
                     .antMatchers(HttpMethod.POST, "/imageNames").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.POST, "/imageNames/*").hasRole("CONTENTCREATOR")
 
                     .antMatchers(HttpMethod.POST, "/imageImages").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.PATCH, "/imageImages").hasRole("CONTENTCREATOR")
@@ -47,6 +48,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.PATCH, "/imageOptions").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.GET, "/imageOptions").authenticated()
                     .antMatchers(HttpMethod.GET, "/imageOptions/*").authenticated()
+
+                    .antMatchers(HttpMethod.GET, "/imageNameWriteQuestions").authenticated()
+                    .antMatchers(HttpMethod.GET, "/imageNameWriteQuestions/*").authenticated()
+                    .antMatchers(HttpMethod.POST, "/imageNameWriteQuestions").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.POST, "/imageNameWriteQuestions/*").hasRole("CONTENTCREATOR")
 
                     .antMatchers(HttpMethod.POST, "/imageImageQuestions").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.PATCH, "/imageImageQuestions").hasRole("CONTENTCREATOR")
