@@ -11,6 +11,9 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,7 +25,6 @@ public class DeleteImageNameGameStepDefs {
 
     @Autowired
     private StepDefs stepDefs;
-    private GetImageNameGameStepDefs getImageNameGameStepDefs;
 
 
     @Autowired
@@ -37,10 +39,29 @@ public class DeleteImageNameGameStepDefs {
     private String newResourceUri;
     private String questionsUri;
 
+    @And("^There is an ImageName game with instructions \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\" and question with \\\"([^\\\"]*)\\\" and \\\"([^\\\"]*)\\\"")
+    public void thereIsAnImageNameGameWithInstructionsAndQuestions (String instructions, String image1, String response1, String image2, String response2) throws Throwable {
+        imageName = new ImageName();
+        imageName.setInstructions(instructions);
 
-    @When("^I delete the previous ImageName")
-    public void iDeleteThePreviousImageName() throws Throwable {
-        newResourceUri = stepDefs.sharedResourceURI;
+        imageNameWriteQuestion1 = new ImageNameWriteQuestion();
+        imageNameWriteQuestion1.setImage(image1);
+        imageNameWriteQuestion1.setSolution(response1);
+        imageNameWriteQuestion1.setImageName(imageName);
+
+        imageNameWriteQuestion2 = new ImageNameWriteQuestion();
+        imageNameWriteQuestion2.setImage(image2);
+        imageNameWriteQuestion2.setSolution(response2);
+        imageNameWriteQuestion2.setImageName(imageName);
+
+        List<ImageNameWriteQuestion> questions = new ArrayList<>();
+        questions.add(imageNameWriteQuestion1);
+        questions.add(imageNameWriteQuestion2);
+
+        imageName.setQuestions(questions);
+
+        newResourceUri = imageNameRepository.save(imageName).getUri();
+
         stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
@@ -55,7 +76,11 @@ public class DeleteImageNameGameStepDefs {
         jsonObject = (JsonObject) jsonObject.get("_links");
         jsonObject = (JsonObject) jsonObject.get("questions");
         questionsUri = jsonObject.get("href").getAsString();
+    }
 
+
+    @When("^I delete the previous ImageName")
+    public void iDeleteThePreviousImageName() throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
@@ -83,7 +108,7 @@ public class DeleteImageNameGameStepDefs {
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        stepDefs.result = stepDefs.mockMvc.perform(
+        stepDefs.mockMvc.perform(
                 get(questionsUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))

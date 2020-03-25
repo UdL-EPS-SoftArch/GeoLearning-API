@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import cat.udl.eps.softarch.geolearning.GeoLearningApplication;
+import cat.udl.eps.softarch.geolearning.repository.ImageNameRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.cucumber.java.Before;
@@ -44,8 +45,6 @@ public class StepDefs {
     protected ResultActions result;
 
     protected ObjectMapper mapper = new ObjectMapper();
-
-    protected String sharedResourceURI;
 
     @Before
     public void setup() {

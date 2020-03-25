@@ -33,7 +33,7 @@ public class GetImageNameGameStepDefs {
 
     private ImageName imageName;
     private int id;
-    protected String newResourceUri;
+    private String newResourceUri;
 
     @And("^There is an ImageName with instructions \\\"([^\\\"]*)\\\"")
     public void thereIsAnImageNameWithInstructions (String instructions) throws Throwable {
@@ -65,8 +65,6 @@ public class GetImageNameGameStepDefs {
         imageName.setQuestions(questions);
 
         newResourceUri = imageNameRepository.save(imageName).getUri();
-
-        stepDefs.sharedResourceURI = newResourceUri;
     }
 
     @When("^I request the previous ImageName")
