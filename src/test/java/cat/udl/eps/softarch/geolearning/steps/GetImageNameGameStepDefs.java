@@ -97,7 +97,7 @@ public class GetImageNameGameStepDefs {
                 .andExpect(jsonPath("$.instructions", is(instructions)));
 
         JsonParser parser = new JsonParser();
-        JsonObject jsonObject = new JsonObject();
+        JsonObject jsonObject;
         String response = stepDefs.result.andReturn().getResponse().getContentAsString();
         jsonObject = (JsonObject) parser.parse(response);
         jsonObject = (JsonObject) jsonObject.get("_links");
