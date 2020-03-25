@@ -29,13 +29,14 @@ public class CreateMatchResultStepDefs {
     @Autowired
     private MatchResultRepository matchResultRepository;
 
-    @Given("There is a player {string} with password {string}")
-    public void thereIsAPlayerWithPassword(String username, String password) {
+    @Given("There is a player {string} with password {string} and {string}")
+    public void thereIsAPlayerWithPasswordAnd(String username, String password, String email) {
         if(!playerRepository.existsById(username))
         {
             player1 = new Player();
             player1.setUsername(username);
             player1.setPassword(password);
+            player1.setEmail(email);
             player1.encodePassword();
             playerRepository.save(player1);
         }
@@ -92,8 +93,10 @@ public class CreateMatchResultStepDefs {
 
     @Given("There is a registered matchResult for this match attached to the player with result {int} and time {int}")
     public void thereIsARegisteredMatchResultForThisMatchAttachedToThePlayerWithResultAndTime(int result, int time) {
-        matchResultSaved = matchResultRepository.findByMatchAndPlayer(match, player1);
+        MatchResult matchResultSaved = matchResultRepository.findByMatchAndPlayer(match, player1);
         Assert.assertEquals(matchResultSaved.getResult(), result);
         Assert.assertEquals(matchResultSaved.getTime(), time);
     }
+
+
 }
