@@ -3,6 +3,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +15,8 @@ public class ImageNameWriteQuestion extends UriEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer inwq_id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "imageName_id", nullable = false)
     ImageName imageName;
 
