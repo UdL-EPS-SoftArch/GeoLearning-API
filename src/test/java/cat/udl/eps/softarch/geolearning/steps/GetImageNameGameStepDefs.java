@@ -4,22 +4,21 @@ import cat.udl.eps.softarch.geolearning.domain.ImageName;
 import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
 import cat.udl.eps.softarch.geolearning.repository.ImageNameRepository;
 import cat.udl.eps.softarch.geolearning.repository.ImageNameWriteQuestionRepository;
+import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonArray;
+import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonObject;
+import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonParser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class GetImageNameGameStepDefs {
 
@@ -96,6 +95,26 @@ public class GetImageNameGameStepDefs {
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
                 .andExpect(jsonPath("$.instructions", is(instructions)));
+
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = new JsonObject();
+        String response = stepDefs.result.andReturn().getResponse().getContentAsString();
+        jsonObject = (JsonObject) parser.parse(response);
+        jsonObject = (JsonObject) jsonObject.get("_links");
+        jsonObject = (JsonObject) jsonObject.get("questions");
+        String questionsUri = jsonObject.get("href").getAsString();
+
+        stepDefs.result = stepDefs.mockMvc.perform(
+                get(questionsUri)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[0].image", is(image1)))
+                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[0].solution", is(response1)))
+                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[1].image", is(image2)))
+                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[1].solution", is(response2)));
+
+
 
     }
 
