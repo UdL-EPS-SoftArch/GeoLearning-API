@@ -40,6 +40,7 @@ public class DeleteImageNameGameStepDefs {
 
     @When("^I delete the previous ImageName")
     public void iDeleteThePreviousImageName() throws Throwable {
+        newResourceUri = stepDefs.sharedResourceURI;
         stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
@@ -55,7 +56,6 @@ public class DeleteImageNameGameStepDefs {
         jsonObject = (JsonObject) jsonObject.get("questions");
         questionsUri = jsonObject.get("href").getAsString();
 
-        newResourceUri = getImageNameGameStepDefs.newResourceUri;
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)

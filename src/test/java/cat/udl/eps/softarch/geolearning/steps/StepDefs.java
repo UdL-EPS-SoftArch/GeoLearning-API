@@ -45,6 +45,8 @@ public class StepDefs {
 
     protected ObjectMapper mapper = new ObjectMapper();
 
+    protected String sharedResourceURI;
+
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders

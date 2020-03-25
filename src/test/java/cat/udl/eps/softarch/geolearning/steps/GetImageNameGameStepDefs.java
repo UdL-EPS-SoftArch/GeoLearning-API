@@ -66,6 +66,7 @@ public class GetImageNameGameStepDefs {
 
         newResourceUri = imageNameRepository.save(imageName).getUri();
 
+        stepDefs.sharedResourceURI = newResourceUri;
     }
 
     @When("^I request the previous ImageName")
