@@ -33,7 +33,7 @@ public class GetImageNameGameStepDefs {
 
     private ImageName imageName;
     private int id;
-    private String newResourceUri;
+    protected String newResourceUri;
 
     @And("^There is an ImageName with instructions \\\"([^\\\"]*)\\\"")
     public void thereIsAnImageNameWithInstructions (String instructions) throws Throwable {
