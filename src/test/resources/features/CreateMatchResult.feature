@@ -13,13 +13,13 @@ Feature: CreateMatchResult
     Then   There is a registered matchResult with result 1 and time 1 for this match attached to the player
 
   Scenario: Play a Match again with better result
-    Given  We played the match previously
+    Given  We played the match previously and a MatchResult is Created with the result 1 and time 1
     And    There is a registered matchResult for this match attached to the player with result 1 and time 1
     When   The match is finished with a matchResult with result 2 and time 1
     Then   There is a registered matchResult with result 2 and time 1 for this match attached to the player
 
   Scenario: Play a Match again with lesser result
-    Given  We played the match previously
+    Given  We played the match previously and a MatchResult is Created with the result 1 and time 1
     And    There is a registered matchResult for this match attached to the player with result 1 and time 1
     When   The match is finished with a matchResult with result 0 and time 1
     Then   There is a registered matchResult with result 1 and time 1 for this match attached to the player

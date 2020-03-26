@@ -12,13 +12,19 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class CreateMatchResultStepDefs {
 
     private Player player1;
     private Match match;
     private MatchResult matchResult;
-    //private MatchResult matchResultSaved;
+    public String newResourceUri;
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -28,6 +34,9 @@ public class CreateMatchResultStepDefs {
 
     @Autowired
     private MatchResultRepository matchResultRepository;
+
+    @Autowired
+    private StepDefs stepDefs;
 
     @Given("There is a player {string} with password {string} and {string}")
     public void thereIsAPlayerWithPasswordAnd(String username, String password, String email) {
@@ -57,18 +66,27 @@ public class CreateMatchResultStepDefs {
         Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player1));
     }
 
-    @Given("We played the match previously")
-    public void wePlayedTheMatchPreviously() {
-        matchResult = new MatchResult();
-        matchResult.setResult(1);
-        matchResult.setTime(1);
+    @Given("We played the match previously and a MatchResult is Created with the result {int} and time {int}")
+    public void wePlayedTheMatchPreviously(int result, int time) throws Throwable {
+        MatchResult matchResult = new MatchResult();
+        matchResult.setResult(result);
+        matchResult.setTime(time);
         matchResult.setMatch(match);
         matchResult.setPlayer(player1);
-        matchResultRepository.save(matchResult);
+        stepDefs.result = stepDefs.mockMvc.perform(
+                post("/matchResults")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                stepDefs.mapper.writeValueAsString(matchResult))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());//.andExpect(status().isOk());
+
+        //newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 
     @When("The match is finished with a matchResult with result {int} and time {int}")
-    public void theMatchIsFinishedWithAMatchResultWithResultAndTime(int result, int time) {
+    public void theMatchIsFinishedWithAMatchResultWithResultAndTime(int result, int time) throws  Throwable{
 
         if(matchResultRepository.findByMatchAndPlayer(match, player1) == null)
         {
@@ -77,25 +95,42 @@ public class CreateMatchResultStepDefs {
             matchResult.setTime(time);
             matchResult.setMatch(match);
             matchResult.setPlayer(player1);
-            matchResultRepository.save(matchResult);
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    post("/matchResults")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(
+                                    stepDefs.mapper.writeValueAsString(matchResult))
+                            .accept(MediaType.APPLICATION_JSON)
+                            .with(AuthenticationStepDefs.authenticate()))
+                    .andDo(print());
+            //newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         }
         else
         {
             if(result > matchResult.getResult() || (result == matchResult.getResult() && time < matchResult.getTime()))
             {
-                //matchResult = new MatchResult();
                 matchResult.setResult(result);
                 matchResult.setTime(time);
-                //matchResult.setMatch(match);
-                //matchResult.setPlayer(player1);
-                //matchResultRepository.delete(matchResultSaved);
-                matchResultRepository.save(matchResult);
+                stepDefs.result = stepDefs.mockMvc.perform(
+                        post("/matchResults")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        stepDefs.mapper.writeValueAsString(matchResult))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(AuthenticationStepDefs.authenticate()))
+                        .andDo(print());
             }
         }
     }
 
     @Then("There is a registered matchResult with result {int} and time {int} for this match attached to the player")
-    public void thereIsARegisteredMatchResultWithResultAndTimeForThisMatchAttachedToThePlayer(int result, int time) {
+    public void thereIsARegisteredMatchResultWithResultAndTimeForThisMatchAttachedToThePlayer(int result, int time) throws Exception {
+        /*stepDefs.result = stepDefs.mockMvc.perform(
+                get(newResourceUri)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(jsonPath("$.result", is(result)));*/
         MatchResult matchResultFinal = matchResultRepository.findByMatchAndPlayer(match, player1);
         Assert.assertEquals(matchResultFinal.getResult(), result);
         Assert.assertEquals(matchResultFinal.getTime(), time);
