@@ -18,7 +18,7 @@ public class CreateMatchResultStepDefs {
     private Player player1;
     private Match match;
     private MatchResult matchResult;
-    private MatchResult matchResultSaved;
+    //private MatchResult matchResultSaved;
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -42,7 +42,7 @@ public class CreateMatchResultStepDefs {
         }
     }
 
-    @And("There is a match with  id {int}")
+    @And("There is a match with id {int}")
     public void thereIsAMatchWithId(Integer matchId) {
         if(!matchRepository.existsById(matchId))
         {
@@ -55,6 +55,16 @@ public class CreateMatchResultStepDefs {
     @Given("There is no registered matchResult for this match attached to the player")
     public void thereIsNoRegisteredMatchResultForThisMatchAttachedToThePlayer() {
         Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player1));
+    }
+
+    @Given("We played the match previously")
+    public void wePlayedTheMatchPreviously() {
+        matchResult = new MatchResult();
+        matchResult.setResult(1);
+        matchResult.setTime(1);
+        matchResult.setMatch(match);
+        matchResult.setPlayer(player1);
+        matchResultRepository.save(matchResult);
     }
 
     @When("The match is finished with a matchResult with result {int} and time {int}")
@@ -71,14 +81,14 @@ public class CreateMatchResultStepDefs {
         }
         else
         {
-            if(result > matchResultSaved.getResult() || (result == matchResultSaved.getResult() && time < matchResultSaved.getTime()))
+            if(result > matchResult.getResult() || (result == matchResult.getResult() && time < matchResult.getTime()))
             {
-                matchResult = new MatchResult();
+                //matchResult = new MatchResult();
                 matchResult.setResult(result);
                 matchResult.setTime(time);
-                matchResult.setMatch(match);
-                matchResult.setPlayer(player1);
-                matchResultRepository.delete(matchResultSaved);
+                //matchResult.setMatch(match);
+                //matchResult.setPlayer(player1);
+                //matchResultRepository.delete(matchResultSaved);
                 matchResultRepository.save(matchResult);
             }
         }
@@ -93,10 +103,8 @@ public class CreateMatchResultStepDefs {
 
     @Given("There is a registered matchResult for this match attached to the player with result {int} and time {int}")
     public void thereIsARegisteredMatchResultForThisMatchAttachedToThePlayerWithResultAndTime(int result, int time) {
-        MatchResult matchResultSaved = matchResultRepository.findByMatchAndPlayer(match, player1);
-        Assert.assertEquals(matchResultSaved.getResult(), result);
-        Assert.assertEquals(matchResultSaved.getTime(), time);
+        matchResult = matchResultRepository.findByMatchAndPlayer(match, player1);
+        Assert.assertEquals(matchResult.getResult(), result);
+        Assert.assertEquals(matchResult.getTime(), time);
     }
-
-
 }
