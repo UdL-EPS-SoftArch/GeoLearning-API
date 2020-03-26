@@ -66,8 +66,8 @@ public class CreateMatchResultStepDefs {
         Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player1));
     }
 
-    @Given("We played the match previously and a MatchResult is Created with the result {int} and time {int}")
-    public void wePlayedTheMatchPreviously(int result, int time) throws Throwable {
+    @Given("I played the match and is created MatchResult with the result {int} and time {int}")
+    public void iPlayedTheMatchAndIsCreatedMatchResultWithTheResultAndTime(int result, int time) throws Throwable {
         MatchResult matchResult = new MatchResult();
         matchResult.setResult(result);
         matchResult.setTime(time);
@@ -80,9 +80,9 @@ public class CreateMatchResultStepDefs {
                                 stepDefs.mapper.writeValueAsString(matchResult))
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print());//.andExpect(status().isOk());
-
-        //newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+                .andDo(print()).andExpect(status().isOk());
+        
+        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 
     @When("The match is finished with a matchResult with result {int} and time {int}")
@@ -103,7 +103,7 @@ public class CreateMatchResultStepDefs {
                             .accept(MediaType.APPLICATION_JSON)
                             .with(AuthenticationStepDefs.authenticate()))
                     .andDo(print());
-            //newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+            newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         }
         else
         {
