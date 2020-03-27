@@ -31,7 +31,7 @@ public class GetImageNameGameStepDefs {
     private ImageNameWriteQuestion imageNameWriteQuestion1;
     private ImageNameWriteQuestion imageNameWriteQuestion2;
 
-    private ImageName imageName;
+    protected ImageName imageName;
     private int id;
     protected String newResourceUri;
 
