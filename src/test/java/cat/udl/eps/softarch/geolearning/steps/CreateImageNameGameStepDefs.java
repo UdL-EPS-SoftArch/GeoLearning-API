@@ -26,9 +26,6 @@ public class CreateImageNameGameStepDefs {
     private ImageName imageName;
     private String newResourceUri;
 
-
-
-
     @When("^I create a new ImageName with instructions \"([^\"]*)\"")
     public void iCreateANewImageNameWithInstructions(String instructions) throws Throwable {
         imageName = new ImageName();

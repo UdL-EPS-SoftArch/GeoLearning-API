@@ -40,6 +40,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.POST, "/imageNames/*").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.DELETE, "/imageNames").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.DELETE, "/imageNames/*").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageNames").hasRole("CONTENTCREATOR")
+                    .antMatchers(HttpMethod.PATCH, "/imageNames/*").hasRole("CONTENTCREATOR")
 
                     .antMatchers(HttpMethod.POST, "/imageImages").hasRole("CONTENTCREATOR")
                     .antMatchers(HttpMethod.PATCH, "/imageImages").hasRole("CONTENTCREATOR")
