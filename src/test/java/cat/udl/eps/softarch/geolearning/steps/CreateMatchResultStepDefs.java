@@ -49,13 +49,13 @@ public class CreateMatchResultStepDefs {
     }
 
     @Given("There is no registered matchResult for this match attached to my user")
-    public void thereIsNoRegisteredMatchResultForThisMatchAttachedToMyUser() {
+    public void thereIsNoRegisteredMatchResultForThisMatchAttachedToMyUser() throws Exception {
         player = playerRepository.findById("demo").get();
         Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player));
     }
 
-    @Given("I played the match and It's created a MatchResult with the result {int} and time {int}")
-    public void iPlayedTheMatchAndIsCreatedMatchResultWithTheResultAndTime(int result, int time) throws Throwable {
+    @Given("I played the match and It has been created a MatchResult with the result {int} and time {int}")
+    public void iPlayedTheMatchAndItHasBeenCreatedMatchResultWithTheResultAndTime(int result, int time) throws Throwable {
 
         player = playerRepository.findById("demo").get();
         matchResult = new MatchResult();
@@ -99,8 +99,8 @@ public class CreateMatchResultStepDefs {
         }
     }
 
-    @Given("There is a registered matchResult for this match attached to the player with result {int} and time {int}")
-    public void thereIsARegisteredMatchResultForThisMatchAttachedToThePlayerWithResultAndTime(int result, int time) throws Exception {
+    @Given("There is a registered matchResult for this match attached to my user with result {int} and time {int}")
+    public void thereIsARegisteredMatchResultForThisMatchAttachedToMyUserWithResultAndTime(int result, int time) throws Exception {
         stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
@@ -110,8 +110,8 @@ public class CreateMatchResultStepDefs {
                 .andExpect(jsonPath("$.time",is(time)));
     }
 
-    @Then("It has been created a matchResult with result {int} and time {int} for this match attached to the player")
-    public void itHasBeenCreatedAMatchResultWithResultAndTimeForThisMatchAttachedToThePlayer(int result, int time) throws Exception {
+    @Then("It has been created a matchResult with result {int} and time {int} for this match attached to my user")
+    public void itHasBeenCreatedAMatchResultWithResultAndTimeForThisMatchAttachedToMyUser(int result, int time) throws Exception {
         stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
@@ -121,8 +121,8 @@ public class CreateMatchResultStepDefs {
                 .andExpect(jsonPath("$.time",is(time)));
     }
 
-    @And("It has been deleted the last MatchResult")
-    public void itHasBeenDeletedTheLastMatchResult() throws Exception {
+    @And("It has been deleted the old MatchResult")
+    public void itHasBeenDeletedTheOldMatchResult() throws Exception {
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete(oldResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
