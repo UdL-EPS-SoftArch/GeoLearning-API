@@ -21,4 +21,15 @@ Feature: ImageName
     When I edit the previous ImageName with instructions "Write bandera con paises"
     Then The response code is 200
     And ImageName has been updated with intructions "Write bandera con paises"
-    
+
+  Scenario: Edit with Content Creator and no instructions
+    Given I login as "creator" with password "password"
+    And There is an ImageName with instructions "Relacionar bandera con paises" and question with "image/japan" and "japan" and question with "image/spain" and "spain"
+    When I edit the previous ImageName with instructions ""
+    Then The response code is 400
+
+  Scenario: Edit with Content Creator and instructions with more than 255 characters
+    Given I login as "creator" with password "password"
+    And There is an ImageName with instructions "Relacionar bandera con paises" and question with "image/japan" and "japan" and question with "image/spain" and "spain"
+    When I edit the previous ImageName with instructions "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec."
+    Then The response code is 400
