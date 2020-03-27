@@ -21,10 +21,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class CreateMatchResultStepDefs {
 
-    private Player player1;
+    private Player player;
     private Match match;
     private MatchResult matchResult;
-    public String newResourceUri;
+    public String newResourceUri, oldResourceUri;
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -38,19 +38,6 @@ public class CreateMatchResultStepDefs {
     @Autowired
     private StepDefs stepDefs;
 
-    @Given("There is a player {string} with password {string} and {string}")
-    public void thereIsAPlayerWithPasswordAnd(String username, String password, String email) {
-        if(!playerRepository.existsById(username))
-        {
-            player1 = new Player();
-            player1.setUsername(username);
-            player1.setPassword(password);
-            player1.setEmail(email);
-            player1.encodePassword();
-            playerRepository.save(player1);
-        }
-    }
-
     @And("There is a match with id {int}")
     public void thereIsAMatchWithId(Integer matchId) {
         if(!matchRepository.existsById(matchId))
@@ -61,18 +48,22 @@ public class CreateMatchResultStepDefs {
         }
     }
 
-    @Given("There is no registered matchResult for this match attached to the player")
-    public void thereIsNoRegisteredMatchResultForThisMatchAttachedToThePlayer() {
-        Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player1));
+    @Given("There is no registered matchResult for this match attached to my user")
+    public void thereIsNoRegisteredMatchResultForThisMatchAttachedToMyUser() {
+        player = playerRepository.findById("demo").get();
+        Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player));
     }
 
-    @Given("I played the match and is created MatchResult with the result {int} and time {int}")
+    @Given("I played the match and It's created a MatchResult with the result {int} and time {int}")
     public void iPlayedTheMatchAndIsCreatedMatchResultWithTheResultAndTime(int result, int time) throws Throwable {
-        MatchResult matchResult = new MatchResult();
+
+        player = playerRepository.findById("demo").get();
+        matchResult = new MatchResult();
         matchResult.setResult(result);
         matchResult.setTime(time);
         matchResult.setMatch(match);
-        matchResult.setPlayer(player1);
+        matchResult.setPlayer(player);
+
         stepDefs.result = stepDefs.mockMvc.perform(
                 post("/matchResults")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +71,7 @@ public class CreateMatchResultStepDefs {
                                 stepDefs.mapper.writeValueAsString(matchResult))
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print()).andExpect(status().isOk());
+                .andDo(print());
         
         newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
@@ -88,58 +79,54 @@ public class CreateMatchResultStepDefs {
     @When("The match is finished with a matchResult with result {int} and time {int}")
     public void theMatchIsFinishedWithAMatchResultWithResultAndTime(int result, int time) throws  Throwable{
 
-        if(matchResultRepository.findByMatchAndPlayer(match, player1) == null)
+        if(result > matchResult.getResult() || (result == matchResult.getResult() && time < matchResult.getTime()))
         {
-            matchResult = new MatchResult();
+            //We insert another match Result, but we save the direction of the old one to delete it later.
+            oldResourceUri = newResourceUri;
             matchResult.setResult(result);
             matchResult.setTime(time);
             matchResult.setMatch(match);
-            matchResult.setPlayer(player1);
+            matchResult.setPlayer(player);
             stepDefs.result = stepDefs.mockMvc.perform(
                     post("/matchResults")
-                            .contentType(MediaType.APPLICATION_JSON)
+                     .contentType(MediaType.APPLICATION_JSON)
                             .content(
                                     stepDefs.mapper.writeValueAsString(matchResult))
-                            .accept(MediaType.APPLICATION_JSON)
-                            .with(AuthenticationStepDefs.authenticate()))
-                    .andDo(print());
-            newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
-        }
-        else
-        {
-            if(result > matchResult.getResult() || (result == matchResult.getResult() && time < matchResult.getTime()))
-            {
-                matchResult.setResult(result);
-                matchResult.setTime(time);
-                stepDefs.result = stepDefs.mockMvc.perform(
-                        post("/matchResults")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(
-                                        stepDefs.mapper.writeValueAsString(matchResult))
                                 .accept(MediaType.APPLICATION_JSON)
                                 .with(AuthenticationStepDefs.authenticate()))
-                        .andDo(print());
-            }
+                   .andDo(print());
+            newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         }
     }
 
-    @Then("There is a registered matchResult with result {int} and time {int} for this match attached to the player")
-    public void thereIsARegisteredMatchResultWithResultAndTimeForThisMatchAttachedToThePlayer(int result, int time) throws Exception {
-        /*stepDefs.result = stepDefs.mockMvc.perform(
+    @Given("There is a registered matchResult for this match attached to the player with result {int} and time {int}")
+    public void thereIsARegisteredMatchResultForThisMatchAttachedToThePlayerWithResultAndTime(int result, int time) throws Exception {
+        stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
-                .andExpect(jsonPath("$.result", is(result)));*/
-        MatchResult matchResultFinal = matchResultRepository.findByMatchAndPlayer(match, player1);
-        Assert.assertEquals(matchResultFinal.getResult(), result);
-        Assert.assertEquals(matchResultFinal.getTime(), time);
+                .andExpect(jsonPath("$.result", is(result)))
+                .andExpect(jsonPath("$.time",is(time)));
     }
 
-    @Given("There is a registered matchResult for this match attached to the player with result {int} and time {int}")
-    public void thereIsARegisteredMatchResultForThisMatchAttachedToThePlayerWithResultAndTime(int result, int time) {
-        matchResult = matchResultRepository.findByMatchAndPlayer(match, player1);
-        Assert.assertEquals(matchResult.getResult(), result);
-        Assert.assertEquals(matchResult.getTime(), time);
+    @Then("It has been created a matchResult with result {int} and time {int} for this match attached to the player")
+    public void itHasBeenCreatedAMatchResultWithResultAndTimeForThisMatchAttachedToThePlayer(int result, int time) throws Exception {
+        stepDefs.result = stepDefs.mockMvc.perform(
+                get(newResourceUri)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(jsonPath("$.result", is(result)))
+                .andExpect(jsonPath("$.time",is(time)));
+    }
+
+    @And("It has been deleted the last MatchResult")
+    public void itHasBeenDeletedTheLastMatchResult() throws Exception {
+        stepDefs.result = stepDefs.mockMvc.perform(
+                delete(oldResourceUri)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
     }
 }
