@@ -9,8 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "GeoLearningPlayer") //Avoid collision with system table User in Postgres
@@ -24,4 +27,7 @@ public class Player extends User {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.commaSeparatedStringToAuthorityList("PLAYER");
     }
+
+    @ManyToMany
+    List<Match> playedMatches = new ArrayList<>();
 }
