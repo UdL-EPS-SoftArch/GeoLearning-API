@@ -26,18 +26,15 @@ public class GetImageNameGameStepDefs {
 
     @Autowired
     private ImageNameRepository imageNameRepository;
-    private ImageNameWriteQuestionRepository imageNameWriteQuestionRepository;
-    private ImageNameWriteQuestion imageNameWriteQuestion1;
-    private ImageNameWriteQuestion imageNameWriteQuestion2;
 
     protected ImageName imageName;
-    private int id;
+    protected ImageNameWriteQuestion imageNameWriteQuestion1;
+    protected ImageNameWriteQuestion imageNameWriteQuestion2;
     protected String newResourceUri;
 
     @And("^There is an ImageName with instructions \\\"([^\\\"]*)\\\"")
     public void thereIsAnImageNameWithInstructions (String instructions) throws Throwable {
         imageName = new ImageName();
-        imageName.setId(id);
         imageName.setInstructions(instructions);
         newResourceUri = imageNameRepository.save(imageName).getUri();
     }

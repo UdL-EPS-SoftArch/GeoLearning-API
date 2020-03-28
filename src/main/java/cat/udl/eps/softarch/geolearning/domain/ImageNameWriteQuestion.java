@@ -17,7 +17,7 @@ public class ImageNameWriteQuestion extends UriEntity<Integer> {
 
     @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
-    @JoinColumn(name = "imageName_id", nullable = true)
+    @JoinColumn(name = "imageName_id")
     ImageName imageName;
 
 

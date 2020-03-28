@@ -20,7 +20,7 @@ Feature: ImageName
     And There is an ImageName with instructions "Relacionar bandera con paises" and question with "image/japan" and "japan" and question with "image/spain" and "spain"
     When I edit the previous ImageName with instructions "Write bandera con paises"
     Then The response code is 200
-    And ImageName has been updated with intructions "Write bandera con paises"
+    And ImageName has been updated with instructions "Write bandera con paises"
 
   Scenario: Edit with Content Creator and no instructions
     Given I login as "creator" with password "password"
@@ -38,5 +38,26 @@ Feature: ImageName
     Given I login as "creator" with password "password"
     And There is an ImageName with instructions "Relacionar bandera con paises"
     When I edit the previous ImageName with question "image/japan" and "japan" and question with "image/spain" and "spain"
-    Then The response code is 200
-    And ImageName has been updated with question "image/japan" and "japan" and question with "image/spain" and "spain"
+    Then The response code is 204
+    And ImageName has been updated with question with "image/japan" and "japan" and question with "image/spain" and "spain"
+
+  Scenario: Edit with Content Creator and add Question to list
+    Given I login as "creator" with password "password"
+    And There is an ImageName with instructions "Relacionar bandera con paises" and question with "image/japan" and "japan" and question with "image/spain" and "spain"
+    When I edit the previous ImageName with question with "image/sweden" and "sweden"
+    Then The response code is 204
+    And ImageName has been updated with question with "image/sweden" and "sweden"
+
+  Scenario: Edit with Content Creator and delete Question from list
+    Given I login as "creator" with password "password"
+    And There is an ImageName with instructions "Relacionar bandera con paises" and question with "image/japan" and "japan" and question with "image/spain" and "spain"
+    When I edit the previous ImageName deleting question with "image/japan" and "japan"
+    Then The response code is 204
+    And ImageName has been updated without question with "image/japan" and "japan"
+
+  Scenario: Edit with Content Creator and delete QuestionList
+    Given I login as "creator" with password "password"
+    And There is an ImageName with instructions "Relacionar bandera con paises" and question with "image/japan" and "japan" and question with "image/spain" and "spain"
+    When I edit the previous ImageName deleting QuestionsList
+    Then The response code is 204
+    And ImageName has been updated without questionList
