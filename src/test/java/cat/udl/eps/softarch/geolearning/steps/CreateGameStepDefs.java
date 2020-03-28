@@ -21,14 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 public class CreateGameStepDefs {
-	
-	  @Autowired
-	  private StepDefs stepDefs;
 
-	  @Autowired
-	  private GameRepository gameRepository;
-		ImageName imageName1;
-	private String newResourceUri;
-	  
-	  
+    @Autowired
+    private StepDefs stepDefs;
+
+    @Autowired
+    private GameRepository gameRepository;
+    ImageName imageName1;
+    public String newResourceUri;
+
+
 }
