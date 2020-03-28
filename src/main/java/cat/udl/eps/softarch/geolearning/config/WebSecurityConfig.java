@@ -74,10 +74,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
                     .antMatchers(HttpMethod.GET, "/imageOptionQuestions").authenticated()
                     .antMatchers(HttpMethod.GET, "/imageOptionQuestions/*").authenticated()
 
+                    .antMatchers(HttpMethod.GET, "/matchResults/*").authenticated()
+                    .antMatchers(HttpMethod.GET, "/matchResults").authenticated()
+                    .antMatchers(HttpMethod.PATCH, "/matchResults/*").authenticated()
+                    .antMatchers(HttpMethod.PUT, "/matchResults/*").authenticated()
+                    .antMatchers(HttpMethod.POST, "/matchResults/*").authenticated()
+                    .antMatchers(HttpMethod.DELETE, "/matchResults/*").authenticated()
+
                     .antMatchers(HttpMethod.POST, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PUT, "/**/*").authenticated()
                     .antMatchers(HttpMethod.PATCH, "/**/*").authenticated()
                     .antMatchers(HttpMethod.DELETE, "/**/*").authenticated()
+
                     .anyRequest().permitAll()
                     .and()
                     .httpBasic().realmName("demo")
