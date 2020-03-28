@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -28,6 +29,6 @@ public class Player extends User {
         return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_PLAYER");
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Match> playedMatches = new ArrayList<>();
 }
