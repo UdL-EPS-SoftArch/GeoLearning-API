@@ -33,8 +33,7 @@ public class CreateImageNameGameStepDefs {
         stepDefs.result = stepDefs.mockMvc.perform(
                 post("/imageNames")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(
-                                stepDefs.mapper.writeValueAsString(imageName))
+                        .content(stepDefs.mapper.writeValueAsString(imageName))
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
