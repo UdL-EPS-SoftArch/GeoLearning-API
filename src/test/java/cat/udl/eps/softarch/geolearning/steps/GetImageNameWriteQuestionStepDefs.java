@@ -21,7 +21,7 @@ public class GetImageNameWriteQuestionStepDefs {
     private ImageNameWriteQuestionRepository writeQuestionRepository;
     private ImageNameWriteQuestion imageNameWriteQuestion;
 
-    private String newResourceUri;
+    protected String newResourceUri;
 
 
     @And("^There is an ImageNameWriteQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
