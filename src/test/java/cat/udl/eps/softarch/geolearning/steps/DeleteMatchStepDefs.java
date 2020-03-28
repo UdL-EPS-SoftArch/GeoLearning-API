@@ -51,21 +51,46 @@ public class DeleteMatchStepDefs{
 
 
     @When("I create a new match with name {string} and description {string} with rating {int}")
-    public void checkRegisteredMatch(String name, String description, Integer rating) throws Exception{
-        stepDefs.result = stepDefs.mockMvc.perform(
-                get(newResourceUri)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate())
-        ).andDo(print())
-                .andExpect(jsonPath("$.name", is(name)))
-                .andExpect(jsonPath("$.description", is(description)))
-                .andExpect(jsonPath("$.rating", is(rating)))
-        //.andExpect(jsonPath("$.games", is(games)))
-        //.andExpect(jsonPath("$.contentCreator", is(creatorRepository.findByEmail("creator@sample.app"))))
-        ;
-    }
+        public void registerMatch(String name, String description, Integer rating) throws Exception {
+            Match match = new Match();
+            match.setName(name);
+            match.setDescription(description);
+            match.setRating(rating);
 
-    @When("I delete match with name {string} and description {string} with rating {int}")
+            //S'han d'incorporar els objectes de les relacions del domini o s'estableixen en un altre test features¿?
+        /*ImageImage image = new ImageImage();
+        image.setInstructions("Primer joc: ImageImage");
+        imageRepository.save(image);
+
+        List<Game> games = new ArrayList<>();
+        games.add(image);
+        match.setGames(games);
+
+        ContentCreator creator = creatorRepository.findByEmail("creator@sample.app");
+        creatorRepository.save(creator);
+        match.setContentCreator(creator);
+
+        JSONObject matchJSON = new JSONObject();
+        matchJSON.put("id", match.getId());
+        matchJSON.put("name", match.getName());
+        matchJSON.put("description", match.getDescription());
+        matchJSON.put("games", new Gson().toJson(games));
+        matchJSON.put("contentCreator", new Gson().toJson(creator));
+        System.out.println("JsonObject: " + matchJSON.toString());*/
+
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    post("/matches")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(stepDefs.mapper.writeValueAsString(match))
+//                .content(matchJSON.toString())
+                            .accept(MediaType.APPLICATION_JSON)
+                            .with(AuthenticationStepDefs.authenticate())
+            ).andDo(print());
+            newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+        }
+
+
+        @When("I delete match with name {string} and description {string} with rating {int}")
     public void iDeleteAMatchtWithNameDescriptionAndRate(String name, String description , Integer rating) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete("/match/{name}", name)

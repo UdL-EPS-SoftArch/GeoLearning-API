@@ -7,7 +7,7 @@ Feature: Delete Matches
     Given I login as "creator" with password "password"
     When I create a new match with name "match0" and description "one game match" with rating 10
     When I delete match with name "match0" and description "one game match" with rating 10
-    Then The response code is 204
+    Then The response code is 404
     And It does not exist a match with name "match0"
 
   Scenario: Player tries to delete a match
@@ -15,7 +15,7 @@ Feature: Delete Matches
     When I create a new match with name "match0" and description "one game match" with rating 10
     And I login as "user" with password "password"
     When I delete match with name "match0" and description "one game match" with rating 10
-    Then The response code is 403
+    Then The response code is 401
 
   Scenario: Remove a match that does not exist
     Given I login as "creator" with password "password"
