@@ -5,7 +5,7 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin={"pretty"}, features="src/test/resources/features/CreateImageNameWriteQuestion.feature", strict = true)
+@CucumberOptions(plugin={"pretty"}, features="src/test/resources/features/GetImageNameWriteQuestion.feature", strict = true)
 public class CucumberTest {
 
 }
