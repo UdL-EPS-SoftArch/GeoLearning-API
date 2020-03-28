@@ -1,6 +1,6 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
-import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
+import cat.udl.eps.softarch.geolearning.domain.ImageNameQuestion;
 import cat.udl.eps.softarch.geolearning.repository.GameRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
@@ -13,23 +13,23 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-public class CreateImageNameWriteQuestionStepDefs {
+public class CreateImageNameQuestionStepDefs {
 
     @Autowired
     private StepDefs stepDefs;
 
     @Autowired
     private GameRepository gameRepository;
-    private ImageNameWriteQuestion writeQuestion;
+    private ImageNameQuestion writeQuestion;
     private String newResourceUri;
 
-    @When("^I create a new ImageNameWriteQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
-    public void iCreateANewImageNameWriteQuestionWithImageAndSolution(String image, String solution) throws Throwable {
-        writeQuestion = new ImageNameWriteQuestion();
+    @When("^I create a new ImageNameQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
+    public void iCreateANewImageNameQuestionWithImageAndSolution(String image, String solution) throws Throwable {
+        writeQuestion = new ImageNameQuestion();
         writeQuestion.setImage(image);
         writeQuestion.setSolution(solution);
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/imageNameWriteQuestions")
+                post("/imageNameQuestions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(stepDefs.mapper.writeValueAsString(writeQuestion))
                         .accept(MediaType.APPLICATION_JSON)
@@ -38,13 +38,13 @@ public class CreateImageNameWriteQuestionStepDefs {
         newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 
-    @And("^It has not been created a ImageNameWriteQuestion")
-    public void itHasBeenCreatedAnImageNameWriteQuestionWithImageAndSolution() throws Throwable {
+    @And("^It has not been created a ImageNameQuestion")
+    public void itHasBeenCreatedAnImageNameQuestionWithImageAndSolution() throws Throwable {
         assert newResourceUri == null;
     }
 
-    @And("^It has been created a ImageNameWriteQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
-    public void itHasBeenCreatedAnImageNameWriteQuestionWithImageAndSolution(String image, String solution) throws Throwable {
+    @And("^It has been created a ImageNameQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
+    public void itHasBeenCreatedAnImageNameQuestionWithImageAndSolution(String image, String solution) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
                     .accept(MediaType.APPLICATION_JSON)

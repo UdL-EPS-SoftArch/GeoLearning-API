@@ -1,6 +1,6 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
-import cat.udl.eps.softarch.geolearning.repository.ImageNameWriteQuestionRepository;
+import cat.udl.eps.softarch.geolearning.repository.ImageNameQuestionRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.json.JSONObject;
@@ -12,36 +12,36 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-public class EditImageNameWriteQuestionStepDefs {
+public class EditImageNameQuestionStepDefs {
 
     @Autowired
     private StepDefs stepDefs;
 
     @Autowired
-    private GetImageNameWriteQuestionStepDefs getImageNameWriteQuestionStepDefs;
+    private GetImageNameQuestionStepDefs getImageNameQuestionStepDefs;
 
     @Autowired
-    private ImageNameWriteQuestionRepository imageNameWriteQuestionRepository;
+    private ImageNameQuestionRepository imageNameQuestionRepository;
 
-    @When("^I edit the previous ImageNameWriteQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
-    public void iEditPreviousImageNameWriteQuestion(String image, String solution) throws Throwable{
-        JSONObject imageNameWriteQuestion = new JSONObject();
-        imageNameWriteQuestion.put("image", image);
-        imageNameWriteQuestion.put("solution", solution);
+    @When("^I edit the previous ImageNameQuestion with image \"([^\"]*)\" and solution \"([^\"]*)\"")
+    public void iEditPreviousImageNameQuestion(String image, String solution) throws Throwable{
+        JSONObject imageNameQuestion = new JSONObject();
+        imageNameQuestion.put("image", image);
+        imageNameQuestion.put("solution", solution);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                patch(getImageNameWriteQuestionStepDefs.newResourceUri)
+                patch(getImageNameQuestionStepDefs.newResourceUri)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(imageNameWriteQuestion.toString())
+                        .content(imageNameQuestion.toString())
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
 
-    @And("^ImageNameWriteQuestion has been updated with image \"([^\"]*)\" and solution \"([^\"]*)\"")
-    public void iCheckThatImageNameWriteQuestionHasBeenUpdated(String image, String solution) throws Throwable {
+    @And("^ImageNameQuestion has been updated with image \"([^\"]*)\" and solution \"([^\"]*)\"")
+    public void iCheckThatImageNameQuestionHasBeenUpdated(String image, String solution) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(getImageNameWriteQuestionStepDefs.newResourceUri)
+                get(getImageNameQuestionStepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())

@@ -1,9 +1,5 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
-import cat.udl.eps.softarch.geolearning.domain.ImageName;
-import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
-import cat.udl.eps.softarch.geolearning.repository.ImageNameRepository;
-import cat.udl.eps.softarch.geolearning.repository.ImageNameWriteQuestionRepository;
 import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonObject;
 import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonParser;
 import io.cucumber.java.en.And;
@@ -11,9 +7,6 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;

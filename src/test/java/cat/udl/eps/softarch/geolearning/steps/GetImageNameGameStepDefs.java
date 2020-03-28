@@ -1,9 +1,8 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
 import cat.udl.eps.softarch.geolearning.domain.ImageName;
-import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
+import cat.udl.eps.softarch.geolearning.domain.ImageNameQuestion;
 import cat.udl.eps.softarch.geolearning.repository.ImageNameRepository;
-import cat.udl.eps.softarch.geolearning.repository.ImageNameWriteQuestionRepository;
 import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonObject;
 import io.cucumber.core.internal.gherkin.deps.com.google.gson.JsonParser;
 import io.cucumber.java.en.And;
@@ -28,8 +27,8 @@ public class GetImageNameGameStepDefs {
     private ImageNameRepository imageNameRepository;
 
     protected ImageName imageName;
-    protected ImageNameWriteQuestion imageNameWriteQuestion1;
-    protected ImageNameWriteQuestion imageNameWriteQuestion2;
+    protected ImageNameQuestion imageNameQuestion1;
+    protected ImageNameQuestion imageNameQuestion2;
     protected String newResourceUri;
 
     @And("^There is an ImageName with instructions \\\"([^\\\"]*)\\\"")
@@ -44,19 +43,19 @@ public class GetImageNameGameStepDefs {
         imageName = new ImageName();
         imageName.setInstructions(instructions);
 
-        imageNameWriteQuestion1 = new ImageNameWriteQuestion();
-        imageNameWriteQuestion1.setImage(image1);
-        imageNameWriteQuestion1.setSolution(response1);
-        imageNameWriteQuestion1.setImageName(imageName);
+        imageNameQuestion1 = new ImageNameQuestion();
+        imageNameQuestion1.setImage(image1);
+        imageNameQuestion1.setSolution(response1);
+        imageNameQuestion1.setImageName(imageName);
 
-        imageNameWriteQuestion2 = new ImageNameWriteQuestion();
-        imageNameWriteQuestion2.setImage(image2);
-        imageNameWriteQuestion2.setSolution(response2);
-        imageNameWriteQuestion2.setImageName(imageName);
+        imageNameQuestion2 = new ImageNameQuestion();
+        imageNameQuestion2.setImage(image2);
+        imageNameQuestion2.setSolution(response2);
+        imageNameQuestion2.setImageName(imageName);
 
-        List<ImageNameWriteQuestion> questions = new ArrayList<>();
-        questions.add(imageNameWriteQuestion1);
-        questions.add(imageNameWriteQuestion2);
+        List<ImageNameQuestion> questions = new ArrayList<>();
+        questions.add(imageNameQuestion1);
+        questions.add(imageNameQuestion2);
 
         imageName.setQuestions(questions);
 
@@ -104,10 +103,10 @@ public class GetImageNameGameStepDefs {
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
-                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[0].image", is(image1)))
-                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[0].solution", is(response1)))
-                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[1].image", is(image2)))
-                .andExpect(jsonPath("$._embedded.imageNameWriteQuestions[1].solution", is(response2)));
+                .andExpect(jsonPath("$._embedded.imageNameQuestions[0].image", is(image1)))
+                .andExpect(jsonPath("$._embedded.imageNameQuestions[0].solution", is(response1)))
+                .andExpect(jsonPath("$._embedded.imageNameQuestions[1].image", is(image2)))
+                .andExpect(jsonPath("$._embedded.imageNameQuestions[1].solution", is(response2)));
 
 
 

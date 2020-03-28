@@ -14,5 +14,5 @@ import java.util.List;
 public class ImageName extends Game {
 
     @OneToMany(mappedBy = "imageName" ,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImageNameWriteQuestion> questions;
+    private List<ImageNameQuestion> questions;
 }

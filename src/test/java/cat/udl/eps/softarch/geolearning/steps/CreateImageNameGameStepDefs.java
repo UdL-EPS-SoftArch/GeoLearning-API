@@ -1,9 +1,7 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
 import cat.udl.eps.softarch.geolearning.domain.ImageName;
-import cat.udl.eps.softarch.geolearning.domain.ImageNameWriteQuestion;
 import cat.udl.eps.softarch.geolearning.repository.GameRepository;
-import cat.udl.eps.softarch.geolearning.repository.ImageNameWriteQuestionRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
