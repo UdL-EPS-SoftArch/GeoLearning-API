@@ -38,26 +38,27 @@ public class CreateMatchResultStepDefs {
     @Autowired
     private StepDefs stepDefs;
 
-    @And("There is a match with id {int}")
-    public void thereIsAMatchWithId(Integer matchId) {
-        if(!matchRepository.existsById(matchId))
+    @And("There is a match with name {string} and rating {int}")
+    public void thereIsAMatcWithNameAndRating(String name, int rating) {
+        if(!matchRepository.existsByName(name))
         {
             match = new Match();
-            match.setId(matchId);
+            match.setName(name);
+            match.setRating(rating);
             matchRepository.save(match);
         }
     }
 
     @Given("There is no registered matchResult for this match attached to my user")
     public void thereIsNoRegisteredMatchResultForThisMatchAttachedToMyUser() throws Exception {
-        player = playerRepository.findById("demo").get();
+        player = playerRepository.findByEmail("demo@sample.app");
         Assert.assertNull(matchResultRepository.findByMatchAndPlayer(match, player));
     }
 
     @Given("I played the match and It has been created a MatchResult with the result {int} and time {int}")
     public void iPlayedTheMatchAndItHasBeenCreatedMatchResultWithTheResultAndTime(int result, int time) throws Throwable {
 
-        player = playerRepository.findById("demo").get();
+        player = playerRepository.findByEmail("demo@sample.app");
         matchResult = new MatchResult();
         matchResult.setResult(result);
         matchResult.setTime(time);

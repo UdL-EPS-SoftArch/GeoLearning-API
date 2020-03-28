@@ -20,6 +20,10 @@ public interface MatchResultRepository extends PagingAndSortingRepository<MatchR
      */
     List<MatchResult> findByPlayer(@Param("player") Player player);
 
+    /**
+     * Find a MatchResult providing Player and Match
+     */
+
     MatchResult findByMatchAndPlayer(@Param("match") Match match, @Param("player") Player player);
 
     /**
@@ -28,4 +32,5 @@ public interface MatchResultRepository extends PagingAndSortingRepository<MatchR
      */
 
     Optional<MatchResult> findById(@Param("Id") Integer id);
+
 }

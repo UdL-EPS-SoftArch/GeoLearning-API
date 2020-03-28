@@ -5,7 +5,7 @@ Feature: CreateMatchResult
 
   Background:
     Given I login as "demo" with password "password"
-    And   There is a match with id 1
+    And   There is a match with name "testGame" and rating 1
 
   Scenario: Play a Match
     Given  There is no registered matchResult for this match attached to my user
