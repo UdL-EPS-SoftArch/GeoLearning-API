@@ -1,7 +1,6 @@
 package cat.udl.eps.softarch.geolearning.steps;
 
 import cat.udl.eps.softarch.geolearning.domain.ImageName;
-import cat.udl.eps.softarch.geolearning.repository.GameRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,29 +18,24 @@ public class CreateImageNameGameStepDefs {
     @Autowired
     private StepDefs stepDefs;
 
-    @Autowired
-    private GameRepository gameRepository;
-    private ImageName imageName;
-    private String newResourceUri;
-
     @When("^I create a new ImageName with instructions \"([^\"]*)\"")
     public void iCreateANewImageNameWithInstructions(String instructions) throws Throwable {
-        imageName = new ImageName();
-        imageName.setInstructions(instructions);
+        stepDefs.imageName = new ImageName();
+        stepDefs.imageName.setInstructions(instructions);
         stepDefs.result = stepDefs.mockMvc.perform(
                 post("/imageNames")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(stepDefs.mapper.writeValueAsString(imageName))
+                        .content(stepDefs.mapper.writeValueAsString(stepDefs.imageName))
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
-        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+        stepDefs.newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 
     @And("^It has been created a ImageName with instructions \\\"([^\\\"]*)\\\"")
     public void itHasBeenCreatedAImageNameWithInstructions(String instructions) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(newResourceUri)
+                get(stepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
@@ -51,20 +45,20 @@ public class CreateImageNameGameStepDefs {
 
     @And("^It has not been created an ImageName")
     public void itHasNotBeenCreatedAnImageName() throws Throwable {
-        assert newResourceUri == null;
+        assert stepDefs.newResourceUri == null;
     }
 
     @When("^I create a new ImageName without instructions")
     public void iCreateANewImageNameWithoutInstructions() throws Throwable {
-        imageName = new ImageName();
+        stepDefs.imageName = new ImageName();
         stepDefs.result = stepDefs.mockMvc.perform(
                 post("/imageNames")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
-                                stepDefs.mapper.writeValueAsString(imageName))
+                                stepDefs.mapper.writeValueAsString(stepDefs.imageName))
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
-        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+        stepDefs.newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 }
