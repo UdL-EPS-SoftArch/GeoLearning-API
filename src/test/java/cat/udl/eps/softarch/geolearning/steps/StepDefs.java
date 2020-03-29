@@ -7,6 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import cat.udl.eps.softarch.geolearning.GeoLearningApplication;
+import cat.udl.eps.softarch.geolearning.domain.ImageImage;
+import cat.udl.eps.softarch.geolearning.domain.ImageName;
+import cat.udl.eps.softarch.geolearning.domain.ImageOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.cucumber.java.Before;
@@ -44,6 +47,12 @@ public class StepDefs {
     protected ResultActions result;
 
     protected ObjectMapper mapper = new ObjectMapper();
+
+    public ImageName imageName;
+    public ImageName imageName1;
+    public ImageImage imageImage1;
+    public ImageOption imageOption1;
+    public String newResourceUri;
 
     @Before
     public void setup() {
