@@ -22,3 +22,11 @@ Feature: Delete Matches
     When I delete match with name "match0" and description "one game match" with rating 10
     Then The response code is 404
 
+  Scenario: Remove a march that does exist
+    Given There is a created match with name "match0" and description "one game match" with rating 10
+    Given I login as "creator" with password "password"
+    When I delete match with name "match0" and description "one game match" with rating 10
+    Then The response code is 404
+
+
+
