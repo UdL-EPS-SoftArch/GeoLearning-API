@@ -5,11 +5,13 @@ import cat.udl.eps.softarch.geolearning.repository.*;
 import io.cucumber.core.internal.gherkin.deps.com.google.gson.Gson;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.data.web.JsonPath;
@@ -20,6 +22,8 @@ import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -55,29 +59,10 @@ public class EditMatchStepDefs {
         match.setDescription(description);
         match.setRating(rating);
 
-        //S'han d'incorporar els objectes de les relacions del domini o s'estableixen en un altre test features¿?
-        /*ImageImage image = new ImageImage();
-        image.setInstructions("Primer joc: ImageImage");
-        imageRepository.save(image);
-        List<Game> games = new ArrayList<>();
-        games.add(image);
-        match.setGames(games);
-        ContentCreator creator = creatorRepository.findByEmail("creator@sample.app");
-        creatorRepository.save(creator);
-        match.setContentCreator(creator);
-        JSONObject matchJSON = new JSONObject();
-        matchJSON.put("id", match.getId());
-        matchJSON.put("name", match.getName());
-        matchJSON.put("description", match.getDescription());
-        matchJSON.put("games", new Gson().toJson(games));
-        matchJSON.put("contentCreator", new Gson().toJson(creator));
-        System.out.println("JsonObject: " + matchJSON.toString());*/
-
         stepDefs.result = stepDefs.mockMvc.perform(
                 post("/matches")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(stepDefs.mapper.writeValueAsString(match))
-//                .content(matchJSON.toString())
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate())
         ).andDo(print());
@@ -85,44 +70,84 @@ public class EditMatchStepDefs {
     }
 
     @When("^I edit match with name \"([^\"]*)\" and description \"([^\"]*)\"$")
-    public void iEditTournamentWithNameLevelAndGame(String name, String description) throws Throwable {
-        JSONObject Match = new JSONObject();
-        Match.put("name", name);
-        Match.put("description", description);
+    public void iEditMatchWithDescription(String name, String description) throws Throwable {
+        JSONObject match = new JSONObject();
+        match.put("description", description);
         stepDefs.result = stepDefs.mockMvc.perform(
-                patch("/matches/{name}", name)
+                patch(newResourceUri)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(Match.toString())
+                        .content(match.toString())
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
 
+    @When("^I edit match with name \"([^\"]*)\" and description \"([^\"]*)\" and match doesn't exist$")
+    public void iEditMatchWithDescriptionNoExists(String name, String description) throws Throwable {
+        Optional<Match> optMatch = matchRepository.findByName(name);
+        try {
+            Match noMatch = optMatch.get();
+            JSONObject match = new JSONObject();
+            match.put("description", description);
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    patch("/matches/{id}", noMatch.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(match.toString())
+                            .accept(MediaType.APPLICATION_JSON)
+                            .with(AuthenticationStepDefs.authenticate()))
+                    .andDo(print());
+        }catch (NoSuchElementException e){}
+    }
+
+    /*@When("^I edit match with name \"([^\"]*)\" and description {int}")
+    public void iEditTournamentWithNameLevelAndGame(String name, Integer rating) throws Throwable {
+        JSONObject Match = new JSONObject();
+        Match.put("rating", rating);
+        stepDefs.result = stepDefs.mockMvc.perform(
+                patch(newResourceUri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Match.toString())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
+    }*/
+
     @And("^It has been edited a match with name \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void itHasBeenEditedAMatchWithNameDescription(String name, String description) throws Throwable {
-        stepDefs.result = stepDefs.mockMvc.perform(get("/matches/{name}", name)
+        stepDefs.result = stepDefs.mockMvc.perform(get(newResourceUri)
                 .accept(MediaType.APPLICATION_JSON)
                 .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(jsonPath("$.description", is(description)));
+    }
+
+    @And("It has been edited a match with name {string} and rating {int}")
+    public void itHasBeenEditedAMatchWithNameDescription(String name, Integer rating) throws Throwable {
+        stepDefs.result = stepDefs.mockMvc.perform(get(newResourceUri)
+                .accept(MediaType.APPLICATION_JSON)
+                .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(jsonPath("$.name", is(name)))
+                .andExpect(jsonPath("$.rating", is(rating)));
     }
 
     @And("^It has not been edited a match with name \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void itHasNotBeenEditedAMatchWithNameDescription(String name, String description) throws Throwable {
-        stepDefs.result = stepDefs.mockMvc
-                .perform(
-                        get("/games/{name}", name,description)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print());
+        stepDefs.result = stepDefs.mockMvc.perform(
+                get(newResourceUri)
+                .accept(MediaType.APPLICATION_JSON)
+                .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+        .andExpect(status().isUnauthorized());
     }
 
-    @When("^I edit match with name \"([^\"]*)\" and new rating \"([^\"]*)\"$")
-    public void iEditMatchWithNameAndNewRating(String name, int rating) throws Throwable {
+    @When("I edit match with name {string} and new rating {int}")
+    public void iEditMatchWithNameAndNewRating(String name, Integer rating) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         JSONObject Match = new JSONObject();
         Match.put("rating", rating);
         stepDefs.result = stepDefs.mockMvc.perform(
-                patch("/matches/{name}", name)
+                patch(newResourceUri)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Match.toString())
                         .accept(MediaType.APPLICATION_JSON)
@@ -136,7 +161,7 @@ public class EditMatchStepDefs {
         JSONObject Match = new JSONObject();
         Match.put("name", name2);
         stepDefs.result = stepDefs.mockMvc.perform(
-                patch("/matches/{name}", name)
+                patch(newResourceUri)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Match.toString())
                         .accept(MediaType.APPLICATION_JSON)
@@ -144,26 +169,31 @@ public class EditMatchStepDefs {
                 .andDo(print());
     }
 
-    @When("^I edit match with name \"([^\"]*)\" and new description \"([^\"]*)\"$")
+    /*@When("^I edit match with name \"([^\"]*)\" and new description \"([^\"]*)\"$")
     public void iEditMatchWithNameAndNewDescription(String name, String description) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         JSONObject Match = new JSONObject();
         Match.put("description", description);
         stepDefs.result = stepDefs.mockMvc.perform(
-                patch("/matches/{name}", name)
+                patch(newResourceUri)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Match.toString())
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
-    }
+    }*/
 
-    @And("^It does not exist a match with name \"([^\"]*)\"$")
+    @Then("^It does not exist a match with name \"([^\"]*)\"$")
     public void itDoesNotExistAMatchWithName(String name) throws Throwable {
-        stepDefs.result = stepDefs.mockMvc.perform(
-                get("/match/{name}", name)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print());
+        Optional<Match> optMatch = matchRepository.findByName(name);
+        try {
+            Match noMatch = optMatch.get();
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    get("/match/{id}", noMatch.getId())
+                            .accept(MediaType.APPLICATION_JSON)
+                            .with(AuthenticationStepDefs.authenticate()))
+                    .andDo(print())
+                    .andExpect(status().isNotFound());
+        }catch (NoSuchElementException e){}
     }
 }
