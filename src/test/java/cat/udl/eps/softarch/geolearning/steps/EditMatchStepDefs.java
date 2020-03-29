@@ -52,7 +52,7 @@ public class EditMatchStepDefs {
     private String newResourceUri;
     private Integer postedId;
 
-    @When("I create a new match with name {string} and description {string} with rating {int}")
+    @And("Before edit create a new match with name {string} and description {string} with rating {int}")
     public void registerMatch(String name, String description, Integer rating) throws Exception {
         Match match = new Match();
         match.setName(name);
@@ -183,7 +183,7 @@ public class EditMatchStepDefs {
                 .andDo(print());
     }*/
 
-    @Then("^It does not exist a match with name \"([^\"]*)\"$")
+    @Then("^No match with name \"([^\"]*)\"$")
     public void itDoesNotExistAMatchWithName(String name) throws Throwable {
         Optional<Match> optMatch = matchRepository.findByName(name);
         try {
