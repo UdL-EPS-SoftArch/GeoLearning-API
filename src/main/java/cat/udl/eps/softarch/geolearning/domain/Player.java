@@ -26,7 +26,7 @@ public class Player extends User {
     @JsonValue(value = false)
     @JsonProperty(access = Access.READ_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("PLAYER");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_PLAYER");
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
