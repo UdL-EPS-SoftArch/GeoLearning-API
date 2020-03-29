@@ -52,25 +52,9 @@ public class EditMatchStepDefs {
     private String newResourceUri;
     private Integer postedId;
 
-    @And("Before edit create a new match with name {string} and description {string} with rating {int}")
-    public void registerMatch(String name, String description, Integer rating) throws Exception {
-        Match match = new Match();
-        match.setName(name);
-        match.setDescription(description);
-        match.setRating(rating);
-
-        stepDefs.result = stepDefs.mockMvc.perform(
-                post("/matches")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(stepDefs.mapper.writeValueAsString(match))
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate())
-        ).andDo(print());
-        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
-    }
-
     @When("^I edit match with name \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void iEditMatchWithDescription(String name, String description) throws Throwable {
+        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         JSONObject match = new JSONObject();
         match.put("description", description);
         stepDefs.result = stepDefs.mockMvc.perform(
@@ -98,19 +82,6 @@ public class EditMatchStepDefs {
                     .andDo(print());
         }catch (NoSuchElementException e){}
     }
-
-    /*@When("^I edit match with name \"([^\"]*)\" and description {int}")
-    public void iEditTournamentWithNameLevelAndGame(String name, Integer rating) throws Throwable {
-        JSONObject Match = new JSONObject();
-        Match.put("rating", rating);
-        stepDefs.result = stepDefs.mockMvc.perform(
-                patch(newResourceUri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Match.toString())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print());
-    }*/
 
     @And("^It has been edited a match with name \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void itHasBeenEditedAMatchWithNameDescription(String name, String description) throws Throwable {
@@ -144,6 +115,7 @@ public class EditMatchStepDefs {
     @When("I edit match with name {string} and new rating {int}")
     public void iEditMatchWithNameAndNewRating(String name, Integer rating) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
+        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         JSONObject Match = new JSONObject();
         Match.put("rating", rating);
         stepDefs.result = stepDefs.mockMvc.perform(
@@ -158,6 +130,7 @@ public class EditMatchStepDefs {
     @When("^I edit match with name \"([^\"]*)\" and new name \"([^\"]*)\"$")
     public void iEditMatchWithNameAndNewName(String name, String name2) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
+        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         JSONObject Match = new JSONObject();
         Match.put("name", name2);
         stepDefs.result = stepDefs.mockMvc.perform(
@@ -168,20 +141,6 @@ public class EditMatchStepDefs {
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
-
-    /*@When("^I edit match with name \"([^\"]*)\" and new description \"([^\"]*)\"$")
-    public void iEditMatchWithNameAndNewDescription(String name, String description) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        JSONObject Match = new JSONObject();
-        Match.put("description", description);
-        stepDefs.result = stepDefs.mockMvc.perform(
-                patch(newResourceUri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(Match.toString())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print());
-    }*/
 
     @Then("^No match with name \"([^\"]*)\"$")
     public void itDoesNotExistAMatchWithName(String name) throws Throwable {
