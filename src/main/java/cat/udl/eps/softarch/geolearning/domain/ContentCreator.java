@@ -10,9 +10,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
+@Table(name = "GeoLearningContentCreator")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ContentCreator extends User {

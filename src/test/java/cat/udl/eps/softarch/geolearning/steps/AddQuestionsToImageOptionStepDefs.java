@@ -15,8 +15,6 @@ public class AddQuestionsToImageOptionStepDefs {
 
     String newResourceUriQ;
 
-    String newResourceUriI;
-
     String newResourceUriPatch;
 
 
@@ -33,7 +31,6 @@ public class AddQuestionsToImageOptionStepDefs {
     @Given("There is a created ImageOption with instructions {string}")
     public void there_is_a_created_ImageOption_with_instructions(String arg0) throws Throwable {
         cg.iCreateANewImageOptionWithInstructions(arg0);
-        newResourceUriI = cg.getNewResourceUri();
     }
 
     @And("There is a ImageOptionQuestion with image {string}, solution {string} and  optionA {string}, optionB {string}, optionC {string}, optionD {string}, optionE {string}")
@@ -45,7 +42,7 @@ public class AddQuestionsToImageOptionStepDefs {
     @When("Content Creator add ImageOptionQuestion with image {string}, solution {string} and  optionA {string}, optionB {string}, optionC {string}, optionD {string}, optionE {string} to a ImageOption with instructions {string}")
     public void contentCreatorAddImageOptionQuestionWithImageSolutionAndOptionAOptionBOptionCOptionDOptionEToAImageOptionWithInstructions(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7) throws Throwable{
         stepDefs.result = stepDefs.mockMvc.perform(
-                post(newResourceUriI+"/questions")
+                post(stepDefs.newResourceUri+"/questions")
                         .contentType("text/uri-list")
                         .content(newResourceUriQ)
                         .accept(MediaType.APPLICATION_JSON)
@@ -60,7 +57,7 @@ public class AddQuestionsToImageOptionStepDefs {
     @And("There is a ImageOptionQuestion with image {string}, solution {string} and  optionA {string}, optionB {string}, optionC {string}, optionD {string}, optionE {string} to a ImageOption with instructions {string}")
     public void thereIsAImageOptionQuestionWithImageSolutionAndOptionAOptionBOptionCOptionDOptionEToAImageOptionWithInstructions(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7) throws Throwable{
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(newResourceUriI+"/questions/{id}", newResourceUriPatch)
+                get(stepDefs.newResourceUri+"/questions/{id}", newResourceUriPatch)
                         .accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk());
     }

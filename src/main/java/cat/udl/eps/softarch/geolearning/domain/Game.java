@@ -16,7 +16,7 @@ public abstract class Game extends UriEntity<Integer> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer game_id;
+	private Integer id;
 	
 	@NotBlank
 	@Length(min = 10, max = 250)
@@ -24,6 +24,6 @@ public abstract class Game extends UriEntity<Integer> {
 
 	@Override
 	public Integer getId() {
-		return game_id;
+		return id;
 	}
 }
