@@ -24,7 +24,7 @@ public class CreateMatchResultStepDefs {
     private Player player;
     private Match match;
     private MatchResult matchResult;
-    public String newResourceUri, oldResourceUri;
+    public String oldResourceUri;
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -74,7 +74,7 @@ public class CreateMatchResultStepDefs {
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
         
-        newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+        stepDefs.newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 
     @When("The match is finished with a matchResult with result {int} and time {int}")
@@ -83,7 +83,7 @@ public class CreateMatchResultStepDefs {
         if(result > matchResult.getResult() || (result == matchResult.getResult() && time < matchResult.getTime()))
         {
             //We insert another match Result, but we save the direction of the old one to delete it later.
-            oldResourceUri = newResourceUri;
+            oldResourceUri = stepDefs.newResourceUri;
             matchResult.setResult(result);
             matchResult.setTime(time);
             matchResult.setMatch(match);
@@ -96,14 +96,14 @@ public class CreateMatchResultStepDefs {
                                 .accept(MediaType.APPLICATION_JSON)
                                 .with(AuthenticationStepDefs.authenticate()))
                    .andDo(print());
-            newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
+            stepDefs.newResourceUri = stepDefs.result.andReturn().getResponse().getHeader("Location");
         }
     }
 
     @Given("There is a registered matchResult for this match attached to my user with result {int} and time {int}")
     public void thereIsARegisteredMatchResultForThisMatchAttachedToMyUserWithResultAndTime(int result, int time) throws Exception {
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(newResourceUri)
+                get(stepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
@@ -114,7 +114,7 @@ public class CreateMatchResultStepDefs {
     @Then("It has been created a matchResult with result {int} and time {int} for this match attached to my user")
     public void itHasBeenCreatedAMatchResultWithResultAndTimeForThisMatchAttachedToMyUser(int result, int time) throws Exception {
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(newResourceUri)
+                get(stepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())

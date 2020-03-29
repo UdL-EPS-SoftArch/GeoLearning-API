@@ -18,9 +18,6 @@ public class EditGameStepDefs {
 	@Autowired
 	private StepDefs stepDefs;
 	
-	@Autowired
-	private CreateGameStepDefs createGameStepDefs;
-	
 	@When("I edit the ImageName and set the instruccions at {string}")
 	public void i_edit_the_ImageName_and_set_the_instruccions_at(String instruccions) throws Throwable {
 		
@@ -28,7 +25,7 @@ public class EditGameStepDefs {
 		data.put("instructions", instruccions);
 		
 		stepDefs.result = stepDefs.mockMvc.perform(
-				patch(createGameStepDefs.newResourceUri)
+				patch(stepDefs.newResourceUri)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(data.toString())
 				.accept(MediaType.APPLICATION_JSON)
@@ -40,7 +37,7 @@ public class EditGameStepDefs {
 	public void the_ImageName_has_the_instructions_at(String instruccions) throws Throwable {
 	    
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(createGameStepDefs.newResourceUri)
+                get(stepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
@@ -53,7 +50,7 @@ public class EditGameStepDefs {
 		data.put("instructions", instruccions);
 		
 		stepDefs.result = stepDefs.mockMvc.perform(
-				patch(createGameStepDefs.newResourceUri)
+				patch(stepDefs.newResourceUri)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(data.toString())
 				.accept(MediaType.APPLICATION_JSON)
@@ -64,7 +61,7 @@ public class EditGameStepDefs {
 	@Then("The ImageImage has the instructions at {string}")
 	public void the_ImageImage_has_the_instructions_at(String instruccions) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(createGameStepDefs.newResourceUri)
+                get(stepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
@@ -77,7 +74,7 @@ public class EditGameStepDefs {
 		data.put("instructions", instruccions);
 		
 		stepDefs.result = stepDefs.mockMvc.perform(
-				patch(createGameStepDefs.newResourceUri)
+				patch(stepDefs.newResourceUri)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(data.toString())
 				.accept(MediaType.APPLICATION_JSON)
@@ -88,7 +85,7 @@ public class EditGameStepDefs {
 	@Then("The ImageOption has the instructions at {string}")
 	public void the_ImageOption_has_the_instructions_at(String instruccions) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
-                get(createGameStepDefs.newResourceUri)
+                get(stepDefs.newResourceUri)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
