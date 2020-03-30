@@ -33,9 +33,6 @@ abstract class Game <<Game>> {
 class ImageName <<Game>> extends Game {
 }
 
-class Write <<Game>> extends Game {
-}
-
 class ImageImage <<Game>> extends Game {
 }
 
@@ -46,7 +43,7 @@ class ImageImageQuestion <<Options>>{
     String image, solution
 }
 
-class ImageNameWriteQuestion <<Options>>{
+class ImageNameQuestion <<Options>>{
     String image, solution
 }
 
@@ -73,8 +70,7 @@ Player "1" -- "*" MatchResult:of <
 Match "1" -- "*" MatchResult:of <
 Match "1" -- "1..*" Game:contains >
 
-Write "1" -- "*" ImageNameWriteQuestion:have >
-ImageName "1" -- "*" ImageNameWriteQuestion:have >
+ImageName "1" -- "*" ImageNameQuestion:have >
 ImageImage "1" -- "*" ImageImageQuestion:have >
 Options "1" -- "*" ImageOptionsQuestion:have >
 
