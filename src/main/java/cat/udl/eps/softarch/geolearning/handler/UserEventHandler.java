@@ -57,6 +57,7 @@ public class UserEventHandler {
         logger.info("After updating: {}", player.toString());
         if (player.isPasswordReset()) {
             player.encodePassword();
+            player.setPasswordReset(false);
         }
         userRepository.save(player);
     }

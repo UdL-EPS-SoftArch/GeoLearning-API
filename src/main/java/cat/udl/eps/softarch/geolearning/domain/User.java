@@ -41,7 +41,6 @@ public abstract class User extends UriEntity<String> implements UserDetails {
     private String password;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Transient
     private boolean passwordReset;
 
     public void encodePassword() {
@@ -50,8 +49,10 @@ public abstract class User extends UriEntity<String> implements UserDetails {
 
     @Override
     public String getId() {
-        return username;
+        return this.username;
     }
+
+    public void setId(String id) { this.username = id; }
 
     @Override
     public boolean isAccountNonExpired() {

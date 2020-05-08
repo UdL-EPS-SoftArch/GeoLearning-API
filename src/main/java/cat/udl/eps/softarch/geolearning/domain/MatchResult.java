@@ -14,11 +14,11 @@ public class MatchResult extends UriEntity<Integer>{
     private Integer id;
 
     private int result;
-    private float time;
+    private int time;
 
     @ManyToOne
     private Match match;
 
-    /*@ManyToOne
-    private Player player;*/
+    @ManyToOne
+    private Player player;
 }
