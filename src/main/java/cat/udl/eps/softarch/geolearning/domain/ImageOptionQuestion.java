@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import cat.udl.eps.softarch.geolearning.repository.ImageOptionRepository;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +16,10 @@ public class ImageOptionQuestion extends UriEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ioq_id;
+
+    @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
+    ImageOption imageOption;
 
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
