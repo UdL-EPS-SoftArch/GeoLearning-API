@@ -56,32 +56,5 @@ public class AuthenticationConfig extends GlobalAuthenticationConfigurerAdapter 
       userRepository.save(user);
     }
 
-    ImageName imageName = new ImageName();
-    imageName.setInstructions("Match name and image");
-    ImageNameQuestion imageNameQuestion1 = new ImageNameQuestion();
-    imageNameQuestion1.setImage("https://upload.wikimedia.org/wikipedia/commons/d/d5/Flag_of_Spain_%28WFB_2000%29.jpg");
-    imageNameQuestion1.setSolution("spain");
-    imageNameQuestion1.setImageName(imageName);
-    ImageNameQuestion imageNameQuestion2 = new ImageNameQuestion();
-    imageNameQuestion2.setImage("https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg");
-    imageNameQuestion2.setSolution("italy");
-    imageNameQuestion2.setImageName(imageName);
-    List<ImageNameQuestion> questions = new ArrayList<>();
-    questions.add(imageNameQuestion1);
-    questions.add(imageNameQuestion2);
-    imageName.setQuestions(questions);
-    imageNameRepository.save(imageName);
-
-    ImageName imageName1 = new ImageName();
-    imageName1.setInstructions("Match name and image");
-    ImageNameQuestion imageNameQuestion3 = new ImageNameQuestion();
-    imageNameQuestion3.setImage("https://cdn.webshopapp.com/shops/94414/files/52385798/flag-of-japan.jpg");
-    imageNameQuestion3.setSolution("japan");
-    imageNameQuestion3.setImageName(imageName1);
-    List<ImageNameQuestion> questions1 = new ArrayList<>();
-    questions1.add(imageNameQuestion3);
-    imageName1.setQuestions(questions1);
-    imageNameRepository.save(imageName1);
-
   }
 }
