@@ -13,8 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ImageImage extends Game{
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "game_id")
+    @OneToMany(mappedBy = "imageImage" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageImageQuestion> questions = new ArrayList<>();
 
 }

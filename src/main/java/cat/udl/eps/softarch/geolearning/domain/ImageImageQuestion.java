@@ -3,6 +3,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +14,10 @@ public class ImageImageQuestion extends UriEntity<Integer>{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iiq_id;
+
+    @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
+    ImageImage imageImage;
 
     @Column(length = 5 * 1024 * 1024) // 5MB
     @Size(max = 5 * 1024 * 1024) // 5MB
