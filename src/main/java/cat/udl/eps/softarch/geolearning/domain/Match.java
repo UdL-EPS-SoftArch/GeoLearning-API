@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.geolearning.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +28,8 @@ public class Match extends UriEntity<Integer>{
     private String description;
 
     @ManyToMany
-    private List<Game> games = new ArrayList<>();
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    private List<Game> games;
 
     @ManyToOne
     private ContentCreator contentCreator;

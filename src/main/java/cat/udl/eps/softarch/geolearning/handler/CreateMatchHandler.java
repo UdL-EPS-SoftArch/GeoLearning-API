@@ -16,7 +16,7 @@ public class CreateMatchHandler {
     final Logger logger = LoggerFactory.getLogger(Match.class);
 
     @HandleBeforeCreate
-    public void  handleTeamPreCreate(Match match){
+    public void  handleMatchPreCreate(Match match){
         logger.info("Before creating: {}", match.toString());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         logger.info("Username: {}", authentication.getAuthorities());
