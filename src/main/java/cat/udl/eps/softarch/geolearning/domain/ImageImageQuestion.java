@@ -33,4 +33,10 @@ public class ImageImageQuestion extends UriEntity<Integer>{
     public Integer getId() {
         return iiq_id;
     }
+
+    @Override
+    public String toString(){
+        return "ImageNameQuestion [imageImageQuestionId=" + iiq_id + ", image=" + image
+                + ", solution=" + solution + "]";
+    }
 }

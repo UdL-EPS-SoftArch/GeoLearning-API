@@ -16,4 +16,9 @@ public class ImageImage extends Game{
     @OneToMany(mappedBy = "imageImage" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageImageQuestion> questions = new ArrayList<>();
 
+    @Override
+    public String toString(){
+        return "ImageName [imageNameId=" + getId() + ", questions=" + questions.toString()
+                + "]";
+    }
 }
