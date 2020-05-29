@@ -45,8 +45,8 @@ public class GetImageNameQuestionStepDefs {
     public void iRequestTheImageNameQuestion(String image, String solution) throws Throwable {
         stepDefs.result = stepDefs.mockMvc.perform(
                 get(newResourceUri)
-                .accept(MediaType.APPLICATION_JSON)
-                .with(AuthenticationStepDefs.authenticate()))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
                 .andExpect(jsonPath("$.image",is(image)))
                 .andExpect(jsonPath("$.solution",is(solution)));
