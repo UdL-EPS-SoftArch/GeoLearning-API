@@ -31,4 +31,6 @@ public abstract class Game extends UriEntity<Integer> {
 	public Integer getId() {
 		return id;
 	}
+
+
 }

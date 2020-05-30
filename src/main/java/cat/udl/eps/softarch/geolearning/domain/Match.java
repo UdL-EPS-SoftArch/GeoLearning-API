@@ -28,7 +28,7 @@ public class Match extends UriEntity<Integer>{
     private String description;
 
     @ManyToMany
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    //@Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private List<Game> games;
 
     @ManyToOne

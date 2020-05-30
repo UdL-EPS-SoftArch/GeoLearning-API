@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.awt.image.ImageProducer;
+
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -17,7 +19,7 @@ public class ImageNameQuestion extends UriEntity<Integer> {
 
     @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
-    ImageName imageName;
+    private ImageName imageName;
 
 
     @Column(length = 5 * 1024 * 1024) // 5MB
@@ -32,5 +34,11 @@ public class ImageNameQuestion extends UriEntity<Integer> {
     @Override
     public Integer getId() {
         return inwq_id;
+    }
+
+    @Override
+    public String toString(){
+        return "ImageNameQuestion [imageNameQuestionId=" + inwq_id + ", image=" + image
+                + ", solution=" + solution + "]";
     }
 }

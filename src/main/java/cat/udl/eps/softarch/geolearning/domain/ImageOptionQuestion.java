@@ -54,4 +54,12 @@ public class ImageOptionQuestion extends UriEntity<Integer> {
     public Integer getId() {
         return ioq_id;
     }
+
+    @Override
+    public String toString(){
+        return "ImageOptionQuestion [imageOptionQuestionId=" + ioq_id + ", image=" + image
+                + ", solution=" + solution + ", opcionA=" + optionA + ", optionB=" + optionB
+                + ", optionC=" + optionC + ", optionD=" + optionD + ", optionE=" + solution
+                + ", solution=" + solution+ "]";
+    }
 }
